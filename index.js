@@ -3,6 +3,11 @@ dotenv.config();
 import express from "express";
 import multer from "multer";
 
+import { addNewItem } from "./routes/add-new-item.js";
+import { getMenu } from "./routes/get-menu.js";
+
+const app = express();
+
 const storage = multer.diskStorage({
     destination: (res, file, cb) => {
         cb(null, "./uploads");
@@ -16,17 +21,14 @@ const storage = multer.diskStorage({
         }
         const newName = `${Date.now()}-image${fileExt}`;
         cb(null, newName);
-        req.filepath = newName;
+        req.filepath = process.env.BASE_URL + newName;
     },
 });
 const upload = multer({ storage: storage });
 
-import { addNewItem } from "./routes/add-new-item.js";
-import { getMenu } from "./routes/get-menu.js";
+app.use(express.static("uploads"));
 
-const app = express();
-
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 app.use("/add", upload.single("image"), addNewItem);
 app.use("/menu", getMenu);

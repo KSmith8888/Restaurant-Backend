@@ -3,8 +3,7 @@ dotenv.config();
 import express from "express";
 import multer from "multer";
 
-import { addNewItem } from "./routes/add-new-item.js";
-import { getMenu } from "./routes/get-menu.js";
+import { menuRouter } from "./routes/menu-route.js";
 
 const app = express();
 
@@ -30,8 +29,8 @@ app.use(express.static("uploads"));
 
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/add", upload.single("image"), addNewItem);
-app.use("/menu", getMenu);
+app.use("/api/v1/menu", upload.single("image"), menuRouter);
+app.use("/api/v1/menu/:id", upload.single("image"), menuRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`App listening on port ${process.env.PORT}`);

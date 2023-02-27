@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import multer from "multer";
+import mongoose from "mongoose";
+mongoose.set("strictQuery", false);
 
 import { menuRouter } from "./routes/menu-route.js";
 
@@ -32,6 +34,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/v1/menu", upload.single("image"), menuRouter);
 app.use("/api/v1/menu/:id", upload.single("image"), menuRouter);
 
-app.listen(process.env.PORT, () => {
-    console.log(`App listening on port ${process.env.PORT}`);
-});
+function startApp() {
+    mongoose
+        .connect(process.env.MONGO_DB_URI)
+        .then(() => {
+            app.listen(process.env.PORT, () => {
+                console.log(`App is listening on port ${process.env.PORT}`);
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+}
+
+startApp();
+
+mongoose.connection.close();

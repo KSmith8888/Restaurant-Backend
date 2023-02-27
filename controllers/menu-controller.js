@@ -1,87 +1,145 @@
-let cacheData = [];
+import { MenuItem } from "../models/menu-item-model.js";
 
-const getAllMenuItems = (req, res) => {
-    res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-    res.header("Access-Control-Allow-Methods", "GET", "OPTIONS");
-    res.status(200);
-    res.json(cacheData);
+const getAllMenuItems = async (req, res) => {
+    try {
+        const allMenuItems = await MenuItem.find();
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Access-Control-Allow-Methods", "GET");
+        res.status(200);
+        res.json(allMenuItems);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
+    }
 };
 
-const getMenuItem = (req, res) => {
-    const paramId = req.params.id;
-    const requestedItem = cacheData.find((menuItem) => {
-        return menuItem.id.toString() === paramId;
-    });
-    res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-    res.header("Access-Control-Allow-Methods", "GET", "OPTIONS");
-    res.status(200);
-    res.json(requestedItem);
+const getMenuItem = async (req, res) => {
+    try {
+        const paramId = req.params.id;
+        const requestedItem = await MenuItem.findOne({ _id: paramId });
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Access-Control-Allow-Methods", "GET");
+        if (requestedItem) {
+            res.status(200);
+            res.json(requestedItem);
+        } else {
+            res.status(404);
+            res.json({ msg: "Item not found" });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
+    }
 };
 
-const createMenuItem = (req, res) => {
-    let newItem = req.body;
-    newItem.id = cacheData.length + 1;
-    newItem.path = req.filepath;
-    if (newItem.highlight) {
-        newItem.highlight = true;
-    } else {
-        newItem.highlight = false;
+const createMenuItem = async (req, res) => {
+    try {
+        let newItem = req.body;
+        if (!req.filepath) {
+            throw new Error("No image file path found");
+        }
+        newItem.path = req.filepath;
+        if (newItem.highlight) {
+            newItem.highlight = true;
+        } else {
+            newItem.highlight = false;
+        }
+        const dbItem = await MenuItem.create(newItem);
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Access-Control-Allow-Methods", "POST");
+        res.status(201);
+        res.json({ msg: "Item created successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
     }
-    cacheData.push(newItem);
-    res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-    res.header("Access-Control-Allow-Methods", "POST", "OPTIONS");
-    res.status(200);
-    res.json({ msg: "got it" });
 };
 
-const updateMenuItem = (req, res) => {
-    const updateInfo = req.body;
-    const paramId = req.params.id;
-    const requestedItem = cacheData.find((menuItem) => {
-        return menuItem.id.toString() === paramId;
-    });
-    if (updateInfo.name) {
-        requestedItem.name = updateInfo.name;
+const updateMenuItem = async (req, res) => {
+    try {
+        const updateInfo = req.body;
+        const paramId = req.params.id;
+        const requestedItem = await MenuItem.findOne({ _id: paramId });
+        if (!requestedItem) {
+            return res.status(404).json({ msg: "Item not found" });
+        }
+        if (!updateInfo.name) {
+            updateInfo.name = requestedItem.name;
+        }
+        if (!updateInfo.price) {
+            updateInfo.price = requestedItem.price;
+        }
+        if (!updateInfo.description) {
+            updateInfo.description = requestedItem.description;
+        }
+        /*
+    If a new file was uploaded as part of the update, use the newly uploaded image file name for the path property, otherwise keep the old path
+    */
+        if (req.filepath) {
+            updateInfo.path = req.filepath;
+        } else {
+            updateInfo.path = requestedItem.filepath;
+        }
+        if (!updateInfo.alt) {
+            updateInfo.alt = requestedItem.alt;
+        }
+        if (!updateInfo.highlight) {
+            updateInfo.highlight = false;
+        } else {
+            updateInfo.highlight = true;
+        }
+        updateInfo._id = requestedItem._id;
+        updateInfo.__v = requestedItem.__v;
+        const replacedItem = await MenuItem.findOneAndReplace(
+            { _id: paramId },
+            updateInfo
+        );
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Access-Control-Allow-Methods", "PATCH");
+        res.status(200);
+        res.json({ msg: "Item updated successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
     }
-    if (updateInfo.price) {
-        requestedItem.price = updateInfo.price;
-    }
-    if (updateInfo.description) {
-        requestedItem.description = updateInfo.description;
-    }
-    if (req.filepath) {
-        requestedItem.path = req.filepath;
-    }
-    if (updateInfo.alt) {
-        requestedItem.alt = updateInfo.alt;
-    }
-    res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-    res.header("Access-Control-Allow-Methods", "PATCH", "OPTIONS");
-    res.status(200);
-    res.json(requestedItem);
 };
 
-const deleteMenuItem = (req, res) => {
-    console.log(cacheData);
-    const paramId = req.params.id;
-    let removeIndex;
-    const requestedItem = cacheData.find((menuItem, index) => {
-        removeIndex = index;
-        return menuItem.id.toString() === paramId;
-    });
-    cacheData.splice(removeIndex, 1);
-    console.log(cacheData);
-    res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-    res.header("Access-Control-Allow-Methods", "DELETE", "OPTIONS");
-    res.status(200);
-    res.json({ msg: "Menu Item Deleted" });
+const deleteMenuItem = async (req, res) => {
+    try {
+        const paramId = req.params.id;
+        const deletedItem = await MenuItem.findOneAndDelete({ _id: paramId });
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Access-Control-Allow-Methods", "DELETE");
+        res.status(200);
+        res.json({ msg: "Item deleted successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
+    }
 };
 
 const optionsPreflight = (req, res) => {
-    res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-    res.status(200);
-    res.json({ msg: "Preflight Passed" });
+    try {
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+        res.status(200);
+        res.json({ msg: "Preflight Passed" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
+    }
 };
 
 export {

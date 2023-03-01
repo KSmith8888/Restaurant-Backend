@@ -6,12 +6,13 @@ import mongoose from "mongoose";
 mongoose.set("strictQuery", false);
 
 import { menuRouter } from "./routes/menu-route.js";
+import { loginRouter } from "./routes/login-route.js";
 
 const app = express();
 
 const storage = multer.diskStorage({
     destination: (res, file, cb) => {
-        cb(null, "./uploads");
+        cb(null, "./public/uploads");
     },
     filename: (req, file, cb) => {
         let fileExt;
@@ -27,12 +28,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-app.use(express.static("uploads"));
+app.use(express.static("./public"));
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use("/api/v1/menu", upload.single("image"), menuRouter);
-app.use("/api/v1/menu/:id", upload.single("image"), menuRouter);
+app.use("/api/v1/login", loginRouter);
 
 function startApp() {
     mongoose
@@ -48,5 +50,3 @@ function startApp() {
 }
 
 startApp();
-
-mongoose.connection.close();

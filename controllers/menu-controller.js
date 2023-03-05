@@ -2,9 +2,9 @@ import { MenuItem } from "../models/menu-item-model.js";
 
 const getAllMenuItems = async (req, res) => {
     try {
-        const allMenuItems = await MenuItem.find();
         res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Access-Control-Allow-Methods", "GET");
+        res.header("Strict-Transport-Security", "max-age=6000");
+        const allMenuItems = await MenuItem.find();
         res.status(200);
         res.json(allMenuItems);
     } catch (err) {
@@ -17,10 +17,10 @@ const getAllMenuItems = async (req, res) => {
 
 const getMenuItem = async (req, res) => {
     try {
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Strict-Transport-Security", "max-age=6000");
         const paramId = req.params.id;
         const requestedItem = await MenuItem.findOne({ _id: paramId });
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Access-Control-Allow-Methods", "GET");
         if (requestedItem) {
             res.status(200);
             res.json(requestedItem);
@@ -38,6 +38,8 @@ const getMenuItem = async (req, res) => {
 
 const createMenuItem = async (req, res) => {
     try {
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Strict-Transport-Security", "max-age=6000");
         let newItem = req.body;
         if (!req.filepath) {
             throw new Error("No image file path found");
@@ -49,8 +51,6 @@ const createMenuItem = async (req, res) => {
             newItem.highlight = false;
         }
         const dbItem = await MenuItem.create(newItem);
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Access-Control-Allow-Methods", "POST");
         res.status(201);
         res.json({ msg: "Item created successfully" });
     } catch (err) {
@@ -63,6 +63,8 @@ const createMenuItem = async (req, res) => {
 
 const updateMenuItem = async (req, res) => {
     try {
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Strict-Transport-Security", "max-age=6000");
         const updateInfo = req.body;
         const paramId = req.params.id;
         const requestedItem = await MenuItem.findOne({ _id: paramId });
@@ -100,8 +102,6 @@ const updateMenuItem = async (req, res) => {
             { _id: paramId },
             updateInfo
         );
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Access-Control-Allow-Methods", "PATCH");
         res.status(200);
         res.json({ msg: "Item updated successfully" });
     } catch (err) {
@@ -114,10 +114,10 @@ const updateMenuItem = async (req, res) => {
 
 const deleteMenuItem = async (req, res) => {
     try {
+        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Strict-Transport-Security", "max-age=6000");
         const paramId = req.params.id;
         const deletedItem = await MenuItem.findOneAndDelete({ _id: paramId });
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Access-Control-Allow-Methods", "DELETE");
         res.status(200);
         res.json({ msg: "Item deleted successfully" });
     } catch (err) {
@@ -131,6 +131,7 @@ const deleteMenuItem = async (req, res) => {
 const optionsPreflight = (req, res) => {
     try {
         res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
+        res.header("Strict-Transport-Security", "max-age=6000");
         res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
         res.status(200);
         res.json({ msg: "Preflight Passed" });

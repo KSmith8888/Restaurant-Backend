@@ -6,11 +6,13 @@ import {
     loginAttempt,
 } from "../controllers/login-controller.js";
 
+import { sanitizeChars } from "../middleware/sanitize.js";
+
 const loginRouter = express.Router();
 
 loginRouter.options("/", optionsPreflight);
 loginRouter.options("/create", optionsPreflight);
-loginRouter.post("/", loginAttempt);
-loginRouter.post("/create", createAccount);
+loginRouter.post("/", sanitizeChars, loginAttempt);
+loginRouter.post("/create", sanitizeChars, createAccount);
 
 export { loginRouter };

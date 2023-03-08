@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; img-src 'self'"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/menu-update.css" />
+        <script src="../scripts/menu-update.js" type="module"></script>
+        <title>Menu Update Page</title>
+    </head>
+    <body>
+        <header class="header">
+            <h1>Menu Update Page</h1>
+            <button id="logout-button" type="button">Logout</button>
+        </header>
+        <nav>
+            <ul>
+                <a href="/pages/manage-entry.html">Login</a>
+            </ul>
+            <ul>
+                <a href="/pages/menu-update.html">Menu Update</a>
+            </ul>
+            <ul>
+                <a href="/pages/register-user.html">Register User</a>
+            </ul>
+        </nav>
+        <main class="main">
+            <form id="add-menu-item-form" autocomplete="off">
+                <h2 id="add-menu-item-heading">Add New Menu Item</h2>
+                <label for="name-input"> Item Name: </label>
+                <input
+                    id="name-input"
+                    class="add-menu-item-input"
+                    type="text"
+                    maxlength="30"
+                    name="name"
+                    required
+                />
+                <label for="price-input"> Item Price: </label>
+                <input
+                    id="price-input"
+                    class="add-menu-item-input"
+                    type="text"
+                    pattern="[0-9.]+"
+                    name="price"
+                    maxlength="7"
+                    required
+                />
+                <label for="description-input"> Item Description: </label>
+                <textarea
+                    id="description-input"
+                    class="add-menu-item-input"
+                    name="description"
+                    maxlength="180"
+                    rows="7"
+                    cols="30"
+                    required
+                >
+                </textarea>
+                <label for="image-input"> Upload Item Image </label>
+                <input
+                    id="image-input"
+                    class="add-menu-item-input"
+                    type="file"
+                    accept=".jpg, .png"
+                    name="image"
+                    required
+                />
+                <label for="alt-input">
+                    Provide a description of the image:
+                </label>
+                <input
+                    id="alt-input"
+                    class="add-menu-item-input"
+                    type="text"
+                    maxlength="30"
+                    name="alt"
+                    required
+                />
+                <label for="highlight-input"> Highlight Item: </label>
+                <input
+                    id="highlight-input"
+                    class="add-menu-item-input"
+                    type="checkbox"
+                    name="highlight"
+                />
+                <button
+                    id="add-menu-item-submit-btn"
+                    class="form-button"
+                    type="submit"
+                >
+                    Submit
+                </button>
+            </form>
+            <section id="current-menu-section"></section>
+            <dialog id="update-menu-item-modal">
+                <form id="update-menu-item-form" autocomplete="off">
+                    <button
+                        type="button"
+                        id="close-menu-modal-button"
+                        class="form-button"
+                    >
+                        Close
+                    </button>
+                    <h2 id="update-menu-item-heading">Update Menu Item:</h2>
+                    <label for="update-name-input">Update Item Name: </label>
+                    <input
+                        id="update-name-input"
+                        class="update-menu-item-input"
+                        type="text"
+                        maxlength="30"
+                        name="name"
+                    />
+                    <label for="update-price-input">Update Item Price: </label>
+                    <input
+                        id="update-price-input"
+                        class="update-menu-item-input"
+                        type="text"
+                        pattern="[0-9.]+"
+                        name="price"
+                        maxlength="7"
+                    />
+                    <label for="update-description-input">
+                        Item Description
+                    </label>
+                    <textarea
+                        id="update-description-input"
+                        class="update-menu-item-input"
+                        name="description"
+                        maxlength="180"
+                        rows="7"
+                        cols="30"
+                    >
+                    </textarea>
+                    <label for="update-image-input">Update Item Image </label>
+                    <input
+                        id="update-image-input"
+                        class="update-menu-item-input"
+                        type="file"
+                        accept=".jpg, .png"
+                        name="image"
+                    />
+                    <label for="update-alt-input">
+                        Provide a description of the new image:
+                    </label>
+                    <input
+                        id="update-alt-input"
+                        class="update-menu-item-input"
+                        type="text"
+                        maxlength="30"
+                        name="alt"
+                    />
+                    <label for="update-highlight-input">
+                        Highlight Item:
+                    </label>
+                    <input
+                        id="update-highlight-input"
+                        class="update-menu-item-input"
+                        type="checkbox"
+                        name="highlight"
+                    />
+                    <button
+                        type="submit"
+                        id="submit-menu-modal-button"
+                        class="form-button"
+                    >
+                        Update
+                    </button>
+                </form>
+            </dialog>
+        </main>
+        <footer class="footer">
+            <small class="footer-text"
+                >Legal information and disclosures can be found in our
+                <a href="#" class="footer-link">Terms of Service</a></small
+            >
+        </footer>
+    </body>
+</html>

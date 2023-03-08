@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self' http://127.0.0.1:3000/api/v1/; base-uri 'self'; img-src 'self' http://127.0.0.1:3000/api/v1/"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/manage-entry.css" />
+        <script src="../scripts/manage-entry.js" type="module"></script>
+        <title>Site Management Entry Page</title>
+    </head>
+    <body>
+        <header class="header">
+            <h1>Site Management Entry Page</h1>
+        </header>
+        <nav>
+            <ul>
+                <a href="/pages/manage-entry.html">Login</a>
+            </ul>
+            <ul>
+                <a href="/pages/menu-update.html">Menu Update</a>
+            </ul>
+            <ul>
+                <a href="/pages/register-user.html">Register User</a>
+            </ul>
+        </nav>
+        <main class="main">
+            <a
+                href="http://127.0.0.1:5500/Restaurant%20Frontend/index.html"
+                id="homepage-link"
+                >Return to homepage</a
+            >
+            <form id="login-form" autocomplete="off">
+                <h2>Login Form</h2>
+                <label for="username-input">Username:</label>
+                <input
+                    id="username-input"
+                    type="text"
+                    maxlength="20"
+                    required
+                />
+                <label for="password-input">Password:</label>
+                <input
+                    id="password-input"
+                    type="password"
+                    maxlength="20"
+                    required
+                />
+                <button id="login-submit-button" type="submit">Submit</button>
+                <p id="error-message"></p>
+            </form>
+        </main>
+        <footer class="footer">
+            <small class="footer-text"
+                >Legal information and disclosures can be found in our
+                <a href="#" class="footer-link">Terms of Service</a></small
+            >
+        </footer>
+    </body>
+</html>

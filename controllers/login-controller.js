@@ -4,9 +4,7 @@ import { User } from "../models/user-model.js";
 
 const createAccount = async (req, res) => {
     try {
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
-        console.log(req.body);
+        res.header("Strict-Transport-Security", "max-age=60000");
         if (!req.body.username || !req.body.password) {
             throw new Error("Credentials not provided");
         } else {
@@ -16,6 +14,8 @@ const createAccount = async (req, res) => {
                 admin: req.body.admin ? true : false,
             };
             const dbUser = await User.create(userInfo);
+            res.status(200);
+            res.json({ status: "success" });
         }
     } catch (err) {
         console.error(err);
@@ -27,8 +27,7 @@ const createAccount = async (req, res) => {
 
 const loginAttempt = async (req, res) => {
     try {
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
+        res.header("Strict-Transport-Security", "max-age=60000");
         if (!req.body.username || !req.body.password) {
             throw new Error("Credentials not provided");
         }
@@ -50,7 +49,13 @@ const loginAttempt = async (req, res) => {
             { expiresIn: "2h" }
         );
         res.status(200);
-        res.json({ status: "success", token: token });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 1800000,
+        });
+        res.json({ status: "success" });
     } catch (err) {
         console.error(err);
         res.status(500).json({
@@ -59,23 +64,4 @@ const loginAttempt = async (req, res) => {
     }
 };
 
-const optionsPreflight = (req, res) => {
-    try {
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
-        res.header("Access-Control-Allow-Methods", "POST");
-        res.header("Access-Control-Allow-Headers", [
-            "content-type",
-            "authorization",
-        ]);
-        res.status(200);
-        res.json({ msg: "Preflight Passed" });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            msg: "There has been an error, please try again later",
-        });
-    }
-};
-
-export { optionsPreflight, loginAttempt, createAccount };
+export { loginAttempt, createAccount };

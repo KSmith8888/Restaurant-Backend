@@ -3,7 +3,7 @@ import { MenuItem } from "../models/menu-item-model.js";
 const getAllMenuItems = async (req, res) => {
     try {
         res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
+        res.header("Strict-Transport-Security", "max-age=60000");
         const allMenuItems = await MenuItem.find();
         res.status(200);
         res.json(allMenuItems);
@@ -17,8 +17,7 @@ const getAllMenuItems = async (req, res) => {
 
 const getMenuItem = async (req, res) => {
     try {
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
+        res.header("Strict-Transport-Security", "max-age=60000");
         const paramId = req.params.id;
         const requestedItem = await MenuItem.findOne({ _id: paramId });
         if (requestedItem) {
@@ -38,8 +37,7 @@ const getMenuItem = async (req, res) => {
 
 const createMenuItem = async (req, res) => {
     try {
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
+        res.header("Strict-Transport-Security", "max-age=60000");
         let newItem = req.body;
         if (!req.filepath) {
             throw new Error("No image file path found");
@@ -63,8 +61,7 @@ const createMenuItem = async (req, res) => {
 
 const updateMenuItem = async (req, res) => {
     try {
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
+        res.header("Strict-Transport-Security", "max-age=60000");
         const updateInfo = req.body;
         const paramId = req.params.id;
         const requestedItem = await MenuItem.findOne({ _id: paramId });
@@ -114,8 +111,7 @@ const updateMenuItem = async (req, res) => {
 
 const deleteMenuItem = async (req, res) => {
     try {
-        res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
+        res.header("Strict-Transport-Security", "max-age=60000");
         const paramId = req.params.id;
         const deletedItem = await MenuItem.findOneAndDelete({ _id: paramId });
         res.status(200);
@@ -131,8 +127,8 @@ const deleteMenuItem = async (req, res) => {
 const optionsPreflight = (req, res) => {
     try {
         res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
-        res.header("Strict-Transport-Security", "max-age=6000");
-        res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+        res.header("Strict-Transport-Security", "max-age=60000");
+        res.header("Access-Control-Allow-Methods", "GET");
         res.status(200);
         res.json({ msg: "Preflight Passed" });
     } catch (err) {

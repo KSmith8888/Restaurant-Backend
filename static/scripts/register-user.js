@@ -1,22 +1,25 @@
-import { sanitizeChars } from "./sanitizeChars";
-
 const registrationForm = document.getElementById("register-user-profile-form");
 const errorMessage = document.getElementById("error-message");
 const usernameInput = document.getElementById("register-username-input");
 const passwordInput = document.getElementById("register-password-input");
 const adminInput = document.getElementById("register-admin-input");
+const logoutBtn = document.getElementById("logout-button");
 
 registrationForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const usernameCheck = sanitizeChars(usernameInput.value);
-    const passwordCheck = sanitizeChars(passwordInput.value);
-    const newAccountInfo = {
-        username: usernameInput.value,
-        password: passwordInput.value,
-        admin: adminInput.checked ? true : false,
-    };
     try {
-        if (usernameCheck || passwordCheck) {
+        if (usernameInput.value === "" || passwordInput.value === "") {
+            throw new Error("Please provide a username and password");
+        }
+        const newAccountInfo = {
+            username: usernameInput.value,
+            password: passwordInput.value,
+            admin: adminInput.checked ? true : false,
+        };
+        const reg = new RegExp("^[a-zA-Z0-9 -.]+$");
+        const usernameCheck = reg.test(usernameInput.value);
+        const passwordCheck = reg.test(passwordInput.value);
+        if (!usernameCheck || !passwordCheck) {
             throw new Error(
                 "Special characters are not allowed in credentials"
             );
@@ -32,11 +35,25 @@ registrationForm.addEventListener("submit", async (e) => {
             }
         );
         const data = await response.json();
-        if (data.status === "success") {
-            errorMessage.textContent = `Account has been created`;
-        }
+        errorMessage.textContent = data.msg;
+        registrationForm.reset();
     } catch (err) {
         console.error(err);
         errorMessage.textContent = `Account registration failed, ${err}`;
     }
 });
+
+async function logoutUser() {
+    try {
+        const response = await fetch("/api/v1/logout");
+        if (!response.ok) {
+            throw new Error(`Logout did not complete: ${response.status}`);
+        } else {
+            location.href = "./manage-entry.html";
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+logoutBtn.addEventListener("click", logoutUser);

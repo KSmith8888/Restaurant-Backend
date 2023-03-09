@@ -7,24 +7,29 @@
             content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; img-src 'self'"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/all-pages.css" />
         <link rel="stylesheet" href="../styles/menu-update.css" />
         <script src="../scripts/menu-update.js" type="module"></script>
         <title>Menu Update Page</title>
     </head>
     <body>
         <header class="header">
-            <h1>Menu Update Page</h1>
+            <h1 class="main-heading">Menu Update Page</h1>
             <button id="logout-button" type="button">Logout</button>
         </header>
-        <nav>
-            <ul>
-                <a href="/pages/manage-entry.html">Login</a>
+        <nav class="navbar">
+            <ul class="nav-item">
+                <a href="/pages/manage-entry.html" class="nav-link">Login</a>
             </ul>
-            <ul>
-                <a href="/pages/menu-update.html">Menu Update</a>
+            <ul class="nav-item">
+                <a href="/pages/menu-update.html" class="nav-link"
+                    >Menu Update</a
+                >
             </ul>
-            <ul>
-                <a href="/pages/register-user.html">Register User</a>
+            <ul class="nav-item">
+                <a href="/pages/register-user.html" class="nav-link"
+                    >Register User</a
+                >
             </ul>
         </nav>
         <main class="main">
@@ -35,20 +40,24 @@
                     id="name-input"
                     class="add-menu-item-input"
                     type="text"
+                    pattern="[a-zA-Z0-9 -.]+"
                     maxlength="30"
                     name="name"
                     required
                 />
                 <label for="price-input"> Item Price: </label>
-                <input
-                    id="price-input"
-                    class="add-menu-item-input"
-                    type="text"
-                    pattern="[0-9.]+"
-                    name="price"
-                    maxlength="7"
-                    required
-                />
+                <div class="price-input-container">
+                    <span class="currency">$</span>
+                    <input
+                        id="price-input"
+                        class="add-menu-item-input"
+                        type="text"
+                        pattern="[0-9.]+"
+                        name="price"
+                        maxlength="7"
+                        required
+                    />
+                </div>
                 <label for="description-input"> Item Description: </label>
                 <textarea
                     id="description-input"
@@ -77,6 +86,7 @@
                     class="add-menu-item-input"
                     type="text"
                     maxlength="30"
+                    pattern="[a-zA-Z0-9 -.]+"
                     name="alt"
                     required
                 />

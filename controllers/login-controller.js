@@ -1,25 +1,34 @@
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 import { User } from "../models/user-model.js";
 
 const createAccount = async (req, res) => {
     try {
         res.header("Strict-Transport-Security", "max-age=60000");
-        if (!req.body.username || !req.body.password) {
+        const username = req.body.username;
+        const password = req.body.password;
+        const isAdmin = req.body.admin ? true : false;
+        if (!username || !password) {
             throw new Error("Credentials not provided");
         } else {
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
             const userInfo = {
-                username: req.body.username,
-                password: req.body.password,
-                admin: req.body.admin ? true : false,
+                username: username,
+                password: hashedPassword,
+                admin: isAdmin,
             };
             const dbUser = await User.create(userInfo);
             res.status(200);
-            res.json({ status: "success" });
+            res.json({
+                msg: "New user created successfully",
+            });
         }
     } catch (err) {
         console.error(err);
-        res.status(500).json({
+        res.status(500);
+        res.json({
             msg: "There has been an error, please try again later",
         });
     }
@@ -28,16 +37,28 @@ const createAccount = async (req, res) => {
 const loginAttempt = async (req, res) => {
     try {
         res.header("Strict-Transport-Security", "max-age=60000");
-        if (!req.body.username || !req.body.password) {
-            throw new Error("Credentials not provided");
+        const paramUsername = req.body.username;
+        const paramPassword = req.body.password;
+        if (!paramUsername || !paramPassword) {
+            throw new Error(
+                "Credential Error: Username or password not provided"
+            );
         }
-        const dbUser = await User.findOne({ username: req.body.username });
-        if (
-            !dbUser ||
-            dbUser.username !== req.body.username ||
-            dbUser.password !== req.body.password
-        ) {
-            throw new Error("Provided credentials do not match");
+        const dbUser = await User.findOne({ username: paramUsername });
+        if (!dbUser) {
+            throw new Error(
+                "Credential Error: No database user found with provided username"
+            );
+        }
+        const hashedPassword = await bcrypt.compare(
+            paramPassword,
+            dbUser.password
+        );
+        console.log(hashedPassword);
+        if (!hashedPassword) {
+            throw new Error(
+                "Credential Error: Provided password does not match stored hash"
+            );
         }
         const token = jwt.sign(
             {
@@ -55,12 +76,20 @@ const loginAttempt = async (req, res) => {
             sameSite: "strict",
             maxAge: 1800000,
         });
-        res.json({ status: "success" });
+        res.json({ msg: "Logged in successfully" });
     } catch (err) {
         console.error(err);
-        res.status(500).json({
-            msg: "There has been an error, please try again later",
-        });
+        if (err.message.startsWith("Credential Error:")) {
+            res.status(401);
+            res.json({
+                msg: "Provided credentials do not match",
+            });
+        } else {
+            res.status(500);
+            res.json({
+                msg: "There has been an error, please try again later",
+            });
+        }
     }
 };
 

@@ -1,24 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    margin: 0;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    background-color: #fff;
-    color: black;
-}
-
-.header {
-    padding: 2em;
-    text-align: center;
-    border-bottom: 3px solid yellow;
-    background-color: purple;
-    color: yellow;
-    margin-bottom: 2em;
-}
-
 #add-menu-item-form,
 #update-menu-item-form {
     font-family: Georgia, "Times New Roman", Times, serif;
@@ -54,6 +33,16 @@ body {
     padding: 0.4em 0.8em;
     border-radius: 3px;
     margin: 0.5em 0;
+}
+
+.price-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.currency {
+    margin-right: 0.3em;
+    font-size: 1.1rem;
 }
 
 input::file-selector-button {
@@ -133,11 +122,6 @@ input::file-selector-button:focus,
     background-color: rgb(228, 220, 220);
     padding: 0.2em 0.5em;
     border-radius: 3px;
-}
-
-.footer {
-    padding: 3em;
-    text-align: center;
 }
 
 @media (max-width: 950px) {

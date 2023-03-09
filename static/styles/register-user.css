@@ -1,18 +1,19 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    margin: 0;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    background-color: lightblue;
-    color: black;
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #register-user-profile-form {
+    width: 40%;
+    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 3em 5em;
+    border: 2px solid grey;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 5px;
 }

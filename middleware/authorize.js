@@ -4,31 +4,64 @@ import { User } from "../models/user-model.js";
 
 async function authorizeUser(req, res, next) {
     try {
-        if (!req.headers.authorization) {
+        const cookies = req.headers.cookie;
+        if (!cookies) {
+            throw new Error("Credential Error: No cookies present in request");
+        }
+        //const cookiesArray = cookies.split(";");
+        //console.log(cookiesArray, cookiesArray.length);
+        const cookieName = req.headers.cookie.split("=")[0];
+        if (cookieName !== "token") {
             throw new Error(
-                "Authentication failed, proper credentials are not present"
+                "Credential Error: Token cookie not present in request"
             );
         }
-        if (!req.headers.authorization.startsWith("Bearer ")) {
-            throw new Error("Invalid token format");
-        }
-        const token = req.headers.authorization.split(" ")[1];
+        const token = req.headers.cookie.split("=")[1];
         const decodedClient = jwt.verify(token, process.env.JWT_SECRET);
         const id = decodedClient.id;
         const dbUser = await User.findOne({ _id: id });
         if (!dbUser) {
-            throw new Error("Provided credentials do not match");
+            throw new Error(
+                "Credential Error: No matching database user found"
+            );
         }
-        if (!dbUser.admin) {
-            throw new Error("User does not have access to this route");
+        if (dbUser.admin) {
+            req.admin = true;
         }
         next();
     } catch (err) {
         console.error(err);
-        res.status(401).json({
-            msg: "Provided credentials do not match",
-        });
+        if (err.message.startsWith("Credential Error:")) {
+            res.status(401);
+            res.json({
+                msg: "Provided credentials do not match",
+            });
+        } else {
+            res.status(500);
+            res.json({
+                msg: "There has been an error, please try again later",
+            });
+        }
     }
 }
 
-export { authorizeUser };
+function authorizeAdmin(req, res, next) {
+    try {
+        let exception;
+        if (req.path.includes("/schedule") || req.path.includes("/all-pages")) {
+            exception = true;
+        }
+        if (!req.admin && !exception) {
+            throw new Error(
+                "Credential Error: User does not have access to this route"
+            );
+        }
+        next();
+    } catch (err) {
+        console.error(err);
+        res.status(403);
+        res.json({ msg: "Access denied" });
+    }
+}
+
+export { authorizeUser, authorizeAdmin };

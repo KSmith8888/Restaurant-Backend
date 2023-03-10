@@ -15,7 +15,7 @@ import {
 } from "../controllers/menu-controller.js";
 
 import { sanitizeChars } from "../middleware/sanitize.js";
-import { authorizeUser } from "../middleware/authorize.js";
+import { authorizeUser, authorizeAdmin } from "../middleware/authorize.js";
 
 const menuRouter = express.Router();
 
@@ -26,15 +26,29 @@ menuRouter.post(
     "/",
     sanitizeChars,
     authorizeUser,
+    authorizeAdmin,
     upload.single("image"),
     createMenuItem
 );
-menuRouter.delete("/:id", sanitizeChars, authorizeUser, deleteMenuItem);
-menuRouter.get("/:id", sanitizeChars, authorizeUser, getMenuItem);
+menuRouter.delete(
+    "/:id",
+    sanitizeChars,
+    authorizeUser,
+    authorizeAdmin,
+    deleteMenuItem
+);
+menuRouter.get(
+    "/:id",
+    sanitizeChars,
+    authorizeUser,
+    authorizeAdmin,
+    getMenuItem
+);
 menuRouter.patch(
     "/:id",
     sanitizeChars,
     authorizeUser,
+    authorizeAdmin,
     upload.single("image"),
     updateMenuItem
 );

@@ -3,58 +3,24 @@ import bcrypt from "bcrypt";
 
 import { User } from "../models/user-model.js";
 
-const createAccount = async (req, res) => {
-    try {
-        res.header("Strict-Transport-Security", "max-age=60000");
-        const username = req.body.username;
-        const password = req.body.password;
-        const isAdmin = req.body.admin ? true : false;
-        if (!username || !password) {
-            throw new Error("Credentials not provided");
-        } else {
-            const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
-            const userInfo = {
-                username: username,
-                password: hashedPassword,
-                admin: isAdmin,
-            };
-            const dbUser = await User.create(userInfo);
-            res.status(200);
-            res.json({
-                msg: "New user created successfully",
-            });
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500);
-        res.json({
-            msg: "There has been an error, please try again later",
-        });
-    }
-};
-
 const loginAttempt = async (req, res) => {
     try {
-        res.header("Strict-Transport-Security", "max-age=60000");
-        const paramUsername = req.body.username;
-        const paramPassword = req.body.password;
-        if (!paramUsername || !paramPassword) {
-            throw new Error(
-                "Credential Error: Username or password not provided"
-            );
-        }
-        const dbUser = await User.findOne({ username: paramUsername });
+        res.header(
+            "Strict-Transport-Security",
+            "max-age=31536000; includeSubDomains"
+        );
+        const attemptUsername = req.body.username;
+        const attemptPassword = req.body.password;
+        const dbUser = await User.findOne({ username: attemptUsername });
         if (!dbUser) {
             throw new Error(
                 "Credential Error: No database user found with provided username"
             );
         }
         const hashedPassword = await bcrypt.compare(
-            paramPassword,
+            attemptPassword,
             dbUser.password
         );
-        console.log(hashedPassword);
         if (!hashedPassword) {
             throw new Error(
                 "Credential Error: Provided password does not match stored hash"
@@ -74,7 +40,7 @@ const loginAttempt = async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "strict",
-            maxAge: 1800000,
+            maxAge: 1000 * 60 * 60 * 2,
         });
         res.json({ msg: "Logged in successfully" });
     } catch (err) {
@@ -93,4 +59,4 @@ const loginAttempt = async (req, res) => {
     }
 };
 
-export { loginAttempt, createAccount };
+export { loginAttempt };

@@ -1,22 +1,19 @@
 function sanitizeChars(req, res, next) {
     try {
-        const username = req.body.username;
-        const password = req.body.password;
-        if (!username || !password) {
-            throw new Error("Username or password not provided");
+        const reg = new RegExp("^[a-zA-Z0-9 .-]+$");
+        if (!reg.test(req.params.id)) {
+            throw new Error("Param id not valid");
         }
-        if (
-            typeof req.body.username !== "string" ||
-            typeof req.body.password !== "string"
-        ) {
-            throw new Error("Username or password is not a string");
+        const bodyValues = Object.values(req.body);
+        for (let value of bodyValues) {
+            if (value === "") {
+                value = undefined;
+            }
+            if (!reg.test(value)) {
+                throw new Error("User input not valid");
+            }
         }
-        const reg = new RegExp("^[a-zA-Z0-9 -.]+$");
-        if (reg.test(username) && reg.test(password)) {
-            next();
-        } else {
-            throw new Error("User input includes special characters");
-        }
+        next();
     } catch (err) {
         console.error(err);
         res.status(400);

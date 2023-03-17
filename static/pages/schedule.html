@@ -39,6 +39,41 @@
             <section id="schedule-data">
                 <p id="response-message"></p>
             </section>
+            <dialog id="add-schedule-modal">
+                <form id="add-schedule-form">
+                    <button id="add-schedule-close-btn" type="button">
+                        Close
+                    </button>
+                    <label for="add-schedule-name-input">Name:</label>
+                    <input
+                        id="add-schedule-name-input"
+                        type="text"
+                        name="name"
+                        pattern="[a-zA-Z0-9 -]+"
+                        minlength="4"
+                        maxlength="20"
+                        required
+                    />
+                    <div id="add-schedule-days-container">
+                        <label for="add-schedule-1">Schedule:</label>
+                        <input
+                            id="add-schedule-1"
+                            type="text"
+                            name="schedule-1"
+                            pattern="[0-9 :-]+"
+                            minlength="3"
+                            maxlength="12"
+                            required
+                        />
+                    </div>
+                    <button id="add-schedule-day-btn" type="button">
+                        Add Day
+                    </button>
+                    <button id="add-schedule-submit-btn" type="submit">
+                        Submit
+                    </button>
+                </form>
+            </dialog>
         </main>
         <footer class="footer">
             <small class="footer-text"

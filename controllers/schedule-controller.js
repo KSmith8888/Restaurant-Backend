@@ -83,4 +83,69 @@ const createSchedule = async (req, res) => {
     }
 };
 
-export { getSchedule, getAllSchedules, createSchedule };
+const updateSchedule = async (req, res) => {
+    try {
+        res.header(
+            "Strict-Transport-Security",
+            "max-age=31536000; includeSubDomains"
+        );
+        if (!req.userId) {
+            throw new Error("User id not applied from token");
+        }
+        const paramId = req.params.id;
+        const requestedSchedule = await Schedule.findOne({
+            user_id: String(paramId),
+        });
+        if (!requestedSchedule) {
+            throw new Error("No schedule found");
+        }
+        const scheduleData = req.body.scheduleInfo;
+        if (!scheduleData || typeof scheduleData !== "object") {
+            throw new Error("No username or schedule provided");
+        }
+        await Schedule.findOneAndUpdate(
+            { user_id: paramId },
+            {
+                $set: {
+                    schedule: scheduleData,
+                },
+            }
+        );
+        res.status(200);
+        res.json({ msg: "Schedule updated successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
+    }
+};
+
+const deleteSchedule = async (req, res) => {
+    try {
+        res.header(
+            "Strict-Transport-Security",
+            "max-age=31536000; includeSubDomains"
+        );
+        if (!req.userId) {
+            throw new Error("User id not applied from token");
+        }
+        const paramId = req.params.id;
+        await Schedule.findOneAndDelete({ user_id: paramId });
+        res.status(200);
+        res.json({ msg: "Schedule deleted successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
+    }
+};
+
+export {
+    getSchedule,
+    getAllSchedules,
+    createSchedule,
+    updateSchedule,
+    deleteSchedule,
+};

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; img-src 'self'"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/all-pages.css" />
+        <link rel="stylesheet" href="../styles/schedule.css" />
+        <script src="../scripts/schedule.js" type="module"></script>
+        <title>Schedule Page</title>
+    </head>
+    <body>
+        <header class="header">
+            <h1 class="main-heading">Schedule Page</h1>
+            <button id="logout-button" type="button">Logout</button>
+        </header>
+        <nav class="navbar">
+            <ul class="nav-item">
+                <a href="http://127.0.0.1:3000/" class="nav-link">Login</a>
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/schedule.html" class="nav-link">Schedule</a>
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/menu-update.html" class="nav-link"
+                    >Menu Update</a
+                >
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/register-user.html" class="nav-link"
+                    >Register User</a
+                >
+            </ul>
+        </nav>
+        <main class="main">
+            <section id="schedule-data">
+                <p id="response-message"></p>
+            </section>
+            <dialog id="add-schedule-modal">
+                <h2 id="create-schedule-form-heading">Create New Schedule</h2>
+                <form
+                    id="add-schedule-form"
+                    aria-labelledby="create-schedule-form-heading"
+                >
+                    <label for="add-schedule-name-input">Name:</label>
+                    <input
+                        id="add-schedule-name-input"
+                        type="text"
+                        name="name"
+                        pattern="[a-zA-Z0-9 -]+"
+                        minlength="4"
+                        maxlength="20"
+                        required
+                    />
+                    <div id="add-schedule-days-container">
+                        <label for="add-schedule-sunday">Sunday:</label>
+                        <input
+                            id="add-schedule-sunday"
+                            type="text"
+                            name="schedule-sunday"
+                            pattern="[a-zA-Z0-9 :-]+"
+                            minlength="3"
+                            maxlength="12"
+                            required
+                        />
+                        <label for="add-schedule-monday">Monday:</label>
+                        <input
+                            id="add-schedule-monday"
+                            type="text"
+                            name="schedule-monday"
+                            pattern="[a-zA-Z0-9 :-]+"
+                            minlength="3"
+                            maxlength="12"
+                            required
+                        />
+                        <label for="add-schedule-tueday">Tuesday:</label>
+                        <input
+                            id="add-schedule-tuesday"
+                            type="text"
+                            name="schedule-tuesday"
+                            pattern="[a-zA-Z0-9 :-]+"
+                            minlength="3"
+                            maxlength="12"
+                            required
+                        />
+                        <label for="add-schedule-wednesday">Wednesday:</label>
+                        <input
+                            id="add-schedule-wednesday"
+                            type="text"
+                            name="schedule-wednesday"
+                            pattern="[a-zA-Z0-9 :-]+"
+                            minlength="3"
+                            maxlength="12"
+                            required
+                        />
+                        <label for="add-schedule-thursday">Thursday:</label>
+                        <input
+                            id="add-schedule-thursday"
+                            type="text"
+                            name="schedule-thursday"
+                            pattern="[a-zA-Z0-9 :-]+"
+                            minlength="3"
+                            maxlength="12"
+                            required
+                        />
+                        <label for="add-schedule-friday">Friday:</label>
+                        <input
+                            id="add-schedule-friday"
+                            type="text"
+                            name="schedule-friday"
+                            pattern="[a-zA-Z0-9 :-]+"
+                            minlength="3"
+                            maxlength="12"
+                            required
+                        />
+                        <label for="add-schedule-saturday">Saturday:</label>
+                        <input
+                            id="add-schedule-saturday"
+                            type="text"
+                            name="schedule-saturday"
+                            pattern="[a-zA-Z0-9 :-]+"
+                            minlength="3"
+                            maxlength="12"
+                            required
+                        />
+                    </div>
+                    <div class="button-container">
+                        <button
+                            id="add-schedule-close-btn"
+                            class="form-button"
+                            type="button"
+                        >
+                            Close
+                        </button>
+                        <button
+                            id="add-schedule-submit-btn"
+                            class="form-button"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </dialog>
+            <dialog id="update-schedule-modal">
+                <h2 id="update-schedule-form-heading">Create New Schedule</h2>
+                <form
+                    id="update-schedule-form"
+                    aria-labelledby="update-schedule-form-heading"
+                >
+                    <div id="update-schedule-input-container"></div>
+                    <div class="button-container">
+                        <button
+                            id="update-schedule-close-btn"
+                            class="form-button"
+                            type="button"
+                        >
+                            Close
+                        </button>
+                        <button
+                            id="update-schedule-submit-btn"
+                            class="form-button"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </dialog>
+        </main>
+        <footer class="footer">
+            <small class="footer-text"
+                >Legal information and disclosures can be found in our
+                <a href="#" class="footer-link">Terms of Service</a></small
+            >
+        </footer>
+    </body>
+</html>

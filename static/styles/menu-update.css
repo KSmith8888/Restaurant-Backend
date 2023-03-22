@@ -1,0 +1,136 @@
+#add-menu-item-form,
+#update-menu-item-form {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#add-menu-item-form {
+    padding: 3em 5em;
+    border: 2px solid grey;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 5px;
+}
+
+#update-menu-item-modal {
+    padding: 1.5em 4em;
+    border: 2px solid black;
+}
+
+.main {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#submit-menu-modal-button,
+#close-menu-modal-button,
+#add-menu-item-submit-btn {
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: rgb(228, 220, 220);
+    padding: 0.4em 0.8em;
+    border-radius: 3px;
+    margin: 0.5em 0;
+}
+
+.price-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.currency {
+    margin-right: 0.3em;
+    font-size: 1.1rem;
+}
+
+input::file-selector-button {
+    cursor: pointer;
+    border: 1px solid black;
+    background-color: rgb(228, 220, 220);
+    padding: 0.2em 0.5em;
+    border-radius: 3px;
+}
+
+input::file-selector-button:hover,
+input::file-selector-button:focus,
+.update-item-button:hover,
+.delete-item-button:hover,
+.update-item-button:focus,
+.delete-item-button:focus,
+#submit-menu-modal-button:hover,
+#close-menu-modal-button:hover,
+#add-menu-item-submit-btn:hover,
+#submit-menu-modal-button:focus,
+#close-menu-modal-button:focus,
+#add-menu-item-submit-btn:focus {
+    background-color: rgb(202, 192, 192);
+}
+
+.add-menu-item-input,
+.update-menu-item-input {
+    margin: 0.5em 0;
+}
+
+.add-menu-item-input,
+.update-menu-item-input {
+    width: 100%;
+}
+
+#description-input,
+#update-description-input {
+    text-align: start;
+    resize: none;
+}
+
+#current-menu-section {
+    width: 40%;
+    height: 100%;
+    margin: 0 5em;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.current-menu-heading {
+    text-align: center;
+    width: 100%;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.menu-item-container {
+    width: 45%;
+    padding: 1em;
+    margin: 0.5em;
+    border: 1px solid grey;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.item-details {
+    font-weight: 700;
+}
+
+.update-item-button,
+.delete-item-button {
+    cursor: pointer;
+    margin: 0.5em;
+    border: 1px solid black;
+    background-color: rgb(228, 220, 220);
+    padding: 0.2em 0.5em;
+    border-radius: 3px;
+}
+
+@media (max-width: 950px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    #current-menu-section {
+        width: 90%;
+        margin: 1em 0 0 0;
+    }
+}

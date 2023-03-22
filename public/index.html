@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; img-src 'self'"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./manage-entry.css" />
+        <script src="./manage-entry.js" type="module"></script>
+        <title>Site Management Entry Page</title>
+    </head>
+    <body>
+        <header class="header">
+            <h1 class="main-heading">Login Page</h1>
+        </header>
+        <nav class="navbar">
+            <ul class="nav-item">
+                <a href="http://127.0.0.1:5500/Restaurant%20Frontend/index.html"
+                    >Public Site</a
+                >
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/schedule.html" class="nav-link">Schedule</a>
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/menu-update.html" class="nav-link"
+                    >Menu Update</a
+                >
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/register-user.html" class="nav-link"
+                    >Register User</a
+                >
+            </ul>
+        </nav>
+        <main class="main">
+            <form id="login-form" autocomplete="off">
+                <h2>Login Form</h2>
+                <label for="username-input">Username:</label>
+                <input
+                    id="username-input"
+                    type="text"
+                    pattern="[a-zA-Z0-9 -.]+"
+                    minlength="4"
+                    maxlength="20"
+                    name="username"
+                    required
+                />
+                <label for="password-input">Password:</label>
+                <input
+                    id="password-input"
+                    type="password"
+                    pattern="[a-zA-Z0-9 -.]+"
+                    minlength="4"
+                    maxlength="20"
+                    name="password"
+                    required
+                />
+                <button id="login-submit-button" type="submit">Submit</button>
+                <p id="error-message"></p>
+            </form>
+        </main>
+        <footer class="footer">
+            <small class="footer-text"
+                >Legal information and disclosures can be found in our
+                <a href="#" class="footer-link">Terms of Service</a></small
+            >
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; img-src 'self'"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../styles/all-pages.css" />
+        <link rel="stylesheet" href="../styles/register-user.css" />
+        <script src="../scripts/register-user.js" type="module"></script>
+        <title>User Profile Registration Page</title>
+    </head>
+    <body>
+        <header class="header">
+            <h1 class="main-heading">User Profile Registration Page</h1>
+            <button id="logout-button" type="button">Logout</button>
+        </header>
+        <nav class="navbar">
+            <ul class="nav-item">
+                <a href="http://127.0.0.1:3000/" class="nav-link">Login</a>
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/schedule.html" class="nav-link">Schedule</a>
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/menu-update.html" class="nav-link"
+                    >Menu Update</a
+                >
+            </ul>
+            <ul class="nav-item">
+                <a href="/pages/register-user.html" class="nav-link"
+                    >Register User</a
+                >
+            </ul>
+        </nav>
+        <main class="main">
+            <form id="register-user-profile-form">
+                <h2>Register New User Profile</h2>
+                <label for="register-username-input">Username:</label>
+                <input
+                    id="register-username-input"
+                    type="text"
+                    name="username"
+                    pattern="[a-zA-Z0-9 -.]+"
+                    minlength="4"
+                    maxlength="20"
+                    required
+                />
+                <label for="register-password-input">Password:</label>
+                <input
+                    id="register-password-input"
+                    type="password"
+                    name="password"
+                    pattern="[a-zA-Z0-9 -.]+"
+                    minlength="4"
+                    maxlength="20"
+                    required
+                />
+                <label for="register-admin-input">Admin:</label>
+                <input id="register-admin-input" type="checkbox" name="admin" />
+                <button id="register-user-submit-button" type="submit">
+                    Submit
+                </button>
+                <p id="error-message"></p>
+            </form>
+        </main>
+        <footer class="footer">
+            <small class="footer-text"
+                >Legal information and disclosures can be found in our
+                <a href="#" class="footer-link">Terms of Service</a></small
+            >
+        </footer>
+    </body>
+</html>

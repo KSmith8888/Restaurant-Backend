@@ -6,6 +6,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         let fileExt;
+        //TODO update file extension handling
         if (file.originalname.includes(".jpg")) {
             fileExt = ".jpg";
         } else if (file.originalname.includes(".png")) {

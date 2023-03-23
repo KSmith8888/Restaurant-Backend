@@ -16,6 +16,7 @@ const updateScheduleCloseBtn = document.getElementById(
 const updateScheduleInputContainer = document.getElementById(
     "update-schedule-input-container"
 );
+const scheduleDataSection = document.getElementById("schedule-data-section");
 
 async function getAllSchedules() {
     try {
@@ -26,19 +27,22 @@ async function getAllSchedules() {
         }
         const data = await response.json();
         data.forEach((entry) => {
-            const scheduleContainer = document.createElement("div");
+            const scheduleContainer = document.createElement("tr");
             scheduleContainer.classList.add("schedule-container");
             scheduleData.append(scheduleContainer);
-            const scheduleName = document.createElement("p");
+            const scheduleName = document.createElement("th");
             scheduleName.classList.add("schedule-name");
             scheduleName.textContent = entry.name;
             scheduleContainer.append(scheduleName);
             entry.schedule.forEach((day) => {
-                const scheduleInfo = document.createElement("p");
+                const scheduleInfo = document.createElement("td");
                 scheduleInfo.classList.add("schedule-info");
                 scheduleInfo.textContent = day;
                 scheduleContainer.append(scheduleInfo);
             });
+            const editButtonCell = document.createElement("td");
+            editButtonCell.classList.add("button-cell");
+            scheduleContainer.append(editButtonCell);
             const scheduleEditBtn = document.createElement("button");
             scheduleEditBtn.classList.add("form-button");
             scheduleEditBtn.textContent = "Edit";
@@ -48,22 +52,18 @@ async function getAllSchedules() {
                 updateScheduleForm.dataset.schedule = entry.schedule;
                 addUpdateScheduleInputs();
             });
-            scheduleContainer.append(scheduleEditBtn);
+            editButtonCell.append(scheduleEditBtn);
+            const deleteButtonCell = document.createElement("td");
+            deleteButtonCell.classList.add("button-cell");
+            scheduleContainer.append(deleteButtonCell);
             const scheduleDeleteBtn = document.createElement("button");
             scheduleDeleteBtn.classList.add("form-button");
             scheduleDeleteBtn.textContent = "Delete";
             scheduleDeleteBtn.addEventListener("click", () => {
                 deleteSchedule(entry.user_id);
             });
-            scheduleContainer.append(scheduleDeleteBtn);
+            deleteButtonCell.append(scheduleDeleteBtn);
         });
-        const addScheduleBtn = document.createElement("button");
-        addScheduleBtn.addEventListener("click", () => {
-            addScheduleModal.showModal();
-        });
-        addScheduleBtn.textContent = "Add new schedule";
-        addScheduleBtn.classList.add("form-button");
-        scheduleData.append(addScheduleBtn);
     } catch (err) {
         responseMessage.textContent = `Error getting schedule data: ${err}`;
         console.error(err);
@@ -224,6 +224,13 @@ if (userId === null || admin === null) {
     console.error("Credentials not valid");
 } else if (admin === "true") {
     getAllSchedules();
+    const addScheduleBtn = document.createElement("button");
+    addScheduleBtn.addEventListener("click", () => {
+        addScheduleModal.showModal();
+    });
+    addScheduleBtn.textContent = "Add new schedule";
+    addScheduleBtn.classList.add("form-button");
+    scheduleDataSection.append(addScheduleBtn);
 } else {
     getSchedule(userId);
 }

@@ -77,15 +77,15 @@ async function getSchedule(id) {
             throw new Error(`Error getting schedule data: ${response.status}`);
         }
         const data = await response.json();
-        const scheduleContainer = document.createElement("div");
+        const scheduleContainer = document.createElement("tr");
         scheduleContainer.classList.add("schedule-container");
         scheduleData.append(scheduleContainer);
-        const scheduleName = document.createElement("p");
+        const scheduleName = document.createElement("th");
         scheduleName.classList.add("schedule-name");
         scheduleName.textContent = data.name;
         scheduleContainer.append(scheduleName);
         data.schedule.forEach((day) => {
-            const scheduleInfo = document.createElement("p");
+            const scheduleInfo = document.createElement("td");
             scheduleInfo.classList.add("schedule-info");
             scheduleInfo.textContent = day;
             scheduleContainer.append(scheduleInfo);

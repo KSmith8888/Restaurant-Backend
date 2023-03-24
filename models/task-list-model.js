@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-const scheduleSchema = new Schema({
+const taskListSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -12,12 +12,12 @@ const scheduleSchema = new Schema({
         required: true,
         unique: true,
     },
-    schedule: {
+    task_list: {
         type: Array,
         required: true,
     },
 });
 
-const Schedule = model("Schedule", scheduleSchema);
+const TaskList = model("TaskList", taskListSchema);
 
-export { Schedule };
+export { TaskList };

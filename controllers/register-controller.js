@@ -18,7 +18,7 @@ const createAccount = async (req, res) => {
             password: hashedPassword,
             admin: isAdmin,
         };
-        const dbUser = await User.create(userInfo);
+        await User.create(userInfo);
         res.status(200);
         res.json({
             msg: "New user created successfully",

@@ -25,6 +25,7 @@ async function authorizeUser(req, res, next) {
                 "Credential Error: No matching database user found"
             );
         }
+        req.userId = decodedClient.id;
         if (dbUser.admin) {
             req.admin = true;
         }
@@ -48,7 +49,11 @@ async function authorizeUser(req, res, next) {
 function authorizeAdmin(req, res, next) {
     try {
         let exception;
-        if (req.path.includes("/schedule") || req.path.includes("/all-pages")) {
+        if (
+            req.path.includes("/schedule") ||
+            req.path.includes("/all-pages") ||
+            req.path.includes("/logout-user")
+        ) {
             exception = true;
         }
         if (!req.admin && !exception) {

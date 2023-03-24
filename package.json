@@ -1,7 +1,7 @@
 {
     "name": "restaurant-backend",
     "version": "1.0.0",
-    "description": "The backend of a restaurant website and management app to handle content updates",
+    "description": "The admin portion of a restaurant website and management app",
     "private": "true",
     "type": "module",
     "scripts": {

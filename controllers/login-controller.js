@@ -9,9 +9,16 @@ const loginAttempt = async (req, res) => {
             "Strict-Transport-Security",
             "max-age=31536000; includeSubDomains"
         );
+        if (!req.body.username || !req.body.password) {
+            throw new Error(
+                "Credential Error: Username or password not provided"
+            );
+        }
         const attemptUsername = req.body.username;
         const attemptPassword = req.body.password;
-        const dbUser = await User.findOne({ username: attemptUsername });
+        const dbUser = await User.findOne({
+            username: String(attemptUsername),
+        });
         if (!dbUser) {
             throw new Error(
                 "Credential Error: No database user found with provided username"
@@ -42,7 +49,11 @@ const loginAttempt = async (req, res) => {
             sameSite: "strict",
             maxAge: 1000 * 60 * 60 * 2,
         });
-        res.json({ msg: "Logged in successfully" });
+        res.json({
+            msg: "Logged in successfully",
+            id: dbUser._id,
+            admin: dbUser.admin,
+        });
     } catch (err) {
         console.error(err);
         if (err.message.startsWith("Credential Error:")) {

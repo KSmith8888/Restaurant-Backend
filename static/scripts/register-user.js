@@ -1,3 +1,5 @@
+import { logoutUser } from "./logout-user.js";
+
 const registrationForm = document.getElementById("register-user-profile-form");
 const errorMessage = document.getElementById("error-message");
 const usernameInput = document.getElementById("register-username-input");
@@ -24,16 +26,13 @@ registrationForm.addEventListener("submit", async (e) => {
                 "Special characters are not allowed in credentials"
             );
         }
-        const response = await fetch(
-            "http://127.0.0.1:3000/api/v1/login/create",
-            {
-                method: "POST",
-                body: JSON.stringify(newAccountInfo),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        const response = await fetch("http://127.0.0.1:3000/api/v1/register", {
+            method: "POST",
+            body: JSON.stringify(newAccountInfo),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         const data = await response.json();
         errorMessage.textContent = data.msg;
         registrationForm.reset();
@@ -42,18 +41,5 @@ registrationForm.addEventListener("submit", async (e) => {
         errorMessage.textContent = `Account registration failed, ${err}`;
     }
 });
-
-async function logoutUser() {
-    try {
-        const response = await fetch("/api/v1/logout");
-        if (!response.ok) {
-            throw new Error(`Logout did not complete: ${response.status}`);
-        } else {
-            location.href = "./manage-entry.html";
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
 
 logoutBtn.addEventListener("click", logoutUser);

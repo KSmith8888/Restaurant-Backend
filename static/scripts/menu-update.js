@@ -1,4 +1,7 @@
+import { logoutUser } from "./logout-user.js";
+
 const addMenuItemForm = document.getElementById("add-menu-item-form");
+const descriptionInput = document.getElementById("description-input");
 const currentMenuSection = document.getElementById("current-menu-section");
 const updateMenuItemModal = document.getElementById("update-menu-item-modal");
 const closeMenuModalBtn = document.getElementById("close-menu-modal-button");
@@ -12,6 +15,7 @@ const logoutBtn = document.getElementById("logout-button");
 
 async function createMenuItem(e) {
     e.preventDefault();
+    descriptionInput.textContent = descriptionInput.textContent.trim();
     const form = e.target;
     const newItemData = new FormData(form);
     try {
@@ -22,9 +26,8 @@ async function createMenuItem(e) {
         if (!response.ok) {
             throw new Error(`Status error getting data ${response.status}`);
         }
-        const data = await response.json();
+        getAllMenuItems();
         addMenuItemForm.reset();
-        console.log(data);
     } catch (err) {
         console.error(err);
         const errorMessage = document.createElement("p");
@@ -102,6 +105,8 @@ async function getAllMenuItems() {
 async function updateMenuItem(e) {
     e.preventDefault();
     const id = updateMenuItemForm.dataset.id;
+    updateDescriptionInput.textContent =
+        updateDescriptionInput.textContent.trim();
     const form = e.target;
     const newItemData = new FormData(form);
     try {
@@ -112,12 +117,10 @@ async function updateMenuItem(e) {
         if (!response.ok) {
             throw new Error(`Status error getting data ${response.status}`);
         }
-        const data = await response.json();
         updateMenuItemForm.reset();
         updateDescriptionInput.textContent = "";
         updateMenuItemModal.close();
         getAllMenuItems();
-        console.log(data);
     } catch (err) {
         console.error(err);
         const errorMessage = document.createElement("p");
@@ -144,19 +147,6 @@ async function deleteMenuItem(id) {
         errorMessage.classList.add("error-message");
         errorMessage.textContent = "Error getting menu data";
         currentMenuSection.prepend(errorMessage);
-    }
-}
-
-async function logoutUser() {
-    try {
-        const response = await fetch("/api/v1/logout");
-        if (!response.ok) {
-            throw new Error(`Logout did not complete: ${response.status}`);
-        } else {
-            location.href = "./manage-entry.html";
-        }
-    } catch (err) {
-        console.error(err);
     }
 }
 

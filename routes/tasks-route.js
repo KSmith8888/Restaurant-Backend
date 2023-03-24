@@ -2,16 +2,16 @@ import express from "express";
 
 import { sanitizeChars } from "../middleware/sanitize.js";
 import { authorizeUser, authorizeAdmin } from "../middleware/authorize.js";
-import { createAccount } from "../controllers/register-controller.js";
+import { createTaskList } from "../controllers/tasks-controller.js";
 
-const registerRouter = express.Router();
+const tasksRouter = express.Router();
 
-registerRouter.post(
+tasksRouter.post(
     "/",
     sanitizeChars,
     authorizeUser,
     authorizeAdmin,
-    createAccount
+    createTaskList
 );
 
-export { registerRouter };
+export { tasksRouter };

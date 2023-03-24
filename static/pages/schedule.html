@@ -25,6 +25,9 @@
                 <a href="/pages/schedule.html" class="nav-link">Schedule</a>
             </ul>
             <ul class="nav-item">
+                <a href="/pages/tasks.html" class="nav-link">Tasks</a>
+            </ul>
+            <ul class="nav-item">
                 <a href="/pages/menu-update.html" class="nav-link"
                     >Menu Update</a
                 >
@@ -36,8 +39,26 @@
             </ul>
         </nav>
         <main class="main">
-            <section id="schedule-data">
-                <p id="response-message"></p>
+            <p id="response-message"></p>
+            <section id="schedule-data-section">
+                <table id="schedule-data-table">
+                    <thead>
+                        <caption>
+                            Employee Schedule
+                        </caption>
+                        <colgroup span="8">
+                            <th class="schedule-head">Name</th>
+                            <th class="schedule-head">Sunday</th>
+                            <th class="schedule-head">Monday</th>
+                            <th class="schedule-head">Tuesday</th>
+                            <th class="schedule-head">Wednesday</th>
+                            <th class="schedule-head">Thursday</th>
+                            <th class="schedule-head">Friday</th>
+                            <th class="schedule-head">Saturday</th>
+                        </colgroup>
+                    </thead>
+                    <tbody id="schedule-data"></tbody>
+                </table>
             </section>
             <dialog id="add-schedule-modal">
                 <h2 id="create-schedule-form-heading">Create New Schedule</h2>

@@ -20,14 +20,13 @@ import { authorizeUser, authorizeAdmin } from "../middleware/authorize.js";
 const menuRouter = express.Router();
 
 menuRouter.options("/", optionsPreflight);
-menuRouter.options("/:id", optionsPreflight);
 menuRouter.get("/", getAllMenuItems);
 menuRouter.post(
     "/",
+    upload.single("image"),
     sanitizeChars,
     authorizeUser,
     authorizeAdmin,
-    upload.single("image"),
     createMenuItem
 );
 menuRouter.delete(
@@ -46,10 +45,10 @@ menuRouter.get(
 );
 menuRouter.patch(
     "/:id",
+    upload.single("image"),
     sanitizeChars,
     authorizeUser,
     authorizeAdmin,
-    upload.single("image"),
     updateMenuItem
 );
 

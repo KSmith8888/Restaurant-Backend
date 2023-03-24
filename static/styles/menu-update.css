@@ -80,7 +80,7 @@ input::file-selector-button:focus,
 
 #description-input,
 #update-description-input {
-    text-align: left;
+    text-align: start;
     resize: none;
 }
 

@@ -1,5 +1,16 @@
-#schedule-data {
-    width: 80%;
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#schedule-data-section {
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #response-message {
@@ -8,23 +19,53 @@
 }
 
 #add-schedule-form,
+#update-schedule-input-container,
 #add-schedule-days-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2em;
+    padding: 1em;
 }
 
-.schedule-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+#schedule-data-table {
+    border-collapse: collapse;
 }
 
+.schedule-info,
 .schedule-name,
-.schedule-info {
+.schedule-head {
     padding: 1em;
     border: 1px solid #1c1c1c;
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-button {
+    cursor: pointer;
+    margin: 0.5em;
+    border: 1px solid black;
+    background-color: rgb(228, 220, 220);
+    padding: 0.2em 0.5em;
+    border-radius: 3px;
+}
+
+.form-button:hover,
+.form-button:focus {
+    background-color: rgb(202, 192, 192);
+}
+
+.schedule-info {
+    min-width: 6em;
+}
+
+#add-schedule-modal[open],
+#update-schedule-modal[open] {
+    padding: 1em 2em;
+    background-color: rgb(151, 164, 175);
+    border: 2px solid black;
 }

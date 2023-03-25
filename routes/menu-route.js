@@ -23,10 +23,10 @@ menuRouter.options("/", optionsPreflight);
 menuRouter.get("/", getAllMenuItems);
 menuRouter.post(
     "/",
-    upload.single("image"),
     sanitizeChars,
     authorizeUser,
     authorizeAdmin,
+    upload.single("image"),
     createMenuItem
 );
 menuRouter.delete(
@@ -45,10 +45,10 @@ menuRouter.get(
 );
 menuRouter.patch(
     "/:id",
-    upload.single("image"),
     sanitizeChars,
     authorizeUser,
     authorizeAdmin,
+    upload.single("image"),
     updateMenuItem
 );
 

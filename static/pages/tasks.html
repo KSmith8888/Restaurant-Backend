@@ -8,6 +8,8 @@
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../styles/all-pages.css" />
+        <link rel="stylesheet" href="../styles/tasks.css" />
+        <script src="../scripts/tasks.js" type="module"></script>
         <title>Employee Tasks</title>
     </head>
     <body>
@@ -17,10 +19,14 @@
         </header>
         <nav class="navbar">
             <ul class="nav-item">
-                <a href="http://127.0.0.1:3000/" class="nav-link">Login</a>
+                <a href="http://127.0.0.1:5500/Restaurant%20Frontend/index.html"
+                    >Public Site</a
+                >
             </ul>
             <ul class="nav-item">
-                <a href="/pages/schedule.html" class="nav-link">Schedule</a>
+                <a href="/pages/schedule.html" class="nav-link active-nav-link"
+                    >Schedule</a
+                >
             </ul>
             <ul class="nav-item">
                 <a href="/pages/tasks.html" class="nav-link">Tasks</a>
@@ -36,6 +42,58 @@
                 >
             </ul>
         </nav>
-        <main></main>
+        <main class="main">
+            <p id="response-message"></p>
+            <section id="tasks-section"></section>
+            <dialog id="add-tasks-modal">
+                <form id="add-tasks-form">
+                    <h2>Add Tasks</h2>
+                    <label for="add-tasks-name-input">Name:</label>
+                    <input
+                        id="add-tasks-name-input"
+                        type="text"
+                        name="name"
+                        pattern="[a-zA-Z0-9 -]+"
+                        minlength="4"
+                        maxlength="20"
+                        required
+                    />
+                    <div id="add-tasks-container">
+                        <label for="add-task-1">Add Task:</label>
+                        <input
+                            id="add-task-1"
+                            type="text"
+                            name="task-1"
+                            pattern="[a-zA-Z0-9 -]+"
+                            minlength="4"
+                            maxlength="60"
+                            required
+                        />
+                    </div>
+                    <div class="button-container">
+                        <button
+                            id="add-tasks-close-btn"
+                            type="button"
+                            class="form-button"
+                        >
+                            Close
+                        </button>
+                        <button
+                            id="add-tasks-submit-btn"
+                            type="submit"
+                            class="form-button"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </dialog>
+        </main>
+        <footer class="footer">
+            <small class="footer-text"
+                >Legal information and disclosures can be found in our
+                <a href="#" class="footer-link">Terms of Service</a></small
+            >
+        </footer>
     </body>
 </html>

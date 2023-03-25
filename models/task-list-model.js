@@ -15,6 +15,7 @@ const taskListSchema = new Schema({
     task_list: {
         type: Array,
         required: true,
+        default: [],
     },
 });
 

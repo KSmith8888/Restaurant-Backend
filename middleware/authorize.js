@@ -51,7 +51,8 @@ function authorizeAdmin(req, res, next) {
         let exception;
         if (
             req.path.includes("/schedule") ||
-            req.path.includes("/all-pages") ||
+            req.path.includes("/tasks") ||
+            req.path.includes("all-pages") ||
             req.path.includes("/logout-user")
         ) {
             exception = true;

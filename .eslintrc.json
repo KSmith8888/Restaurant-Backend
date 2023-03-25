@@ -12,6 +12,7 @@
     },
     "rules": {
         "prefer-const": "error",
+        "linebreak-style": ["error", "unix"],
         "comma-dangle": [
             "error",
             {

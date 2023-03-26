@@ -1,7 +1,7 @@
 import { TaskList } from "../models/task-list-model.js";
 import { User } from "../models/user-model.js";
 
-const getUserTasks = async (req, res) => {
+const getUserTaskList = async (req, res) => {
     try {
         res.header(
             "Strict-Transport-Security",
@@ -29,7 +29,7 @@ const getUserTasks = async (req, res) => {
     }
 };
 
-const getAllTasks = async (req, res) => {
+const getAllTaskLists = async (req, res) => {
     try {
         res.header(
             "Strict-Transport-Security",
@@ -98,4 +98,69 @@ const createTaskList = async (req, res) => {
     }
 };
 
-export { getUserTasks, getAllTasks, createTaskList };
+const updateUserTaskList = async (req, res) => {
+    try {
+        res.header(
+            "Strict-Transport-Security",
+            "max-age=31536000; includeSubDomains"
+        );
+        if (!req.userId) {
+            throw new Error("User id not applied from token");
+        }
+        const paramId = req.params.id;
+        const requestedSchedule = await TaskList.findOne({
+            user_id: String(paramId),
+        });
+        if (!requestedSchedule) {
+            throw new Error("No task list found");
+        }
+        const taskData = req.body.taskInfo;
+        if (!taskData) {
+            throw new Error("No task list provided");
+        }
+        await TaskList.findOneAndUpdate(
+            { user_id: paramId },
+            {
+                $set: {
+                    task_list: taskData,
+                },
+            }
+        );
+        res.status(200);
+        res.json({ msg: "Task list updated successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
+    }
+};
+
+const deleteUserTaskList = async (req, res) => {
+    try {
+        res.header(
+            "Strict-Transport-Security",
+            "max-age=31536000; includeSubDomains"
+        );
+        if (!req.userId) {
+            throw new Error("User id not applied from token");
+        }
+        const paramId = req.params.id;
+        await TaskList.findOneAndDelete({ user_id: paramId });
+        res.status(200);
+        res.json({ msg: "Task list deleted successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            msg: "There has been an error, please try again later",
+        });
+    }
+};
+
+export {
+    getUserTaskList,
+    getAllTaskLists,
+    createTaskList,
+    updateUserTaskList,
+    deleteUserTaskList,
+};

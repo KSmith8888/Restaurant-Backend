@@ -1,3 +1,25 @@
 #add-tasks-button {
     color: red;
 }
+
+#tasks-section {
+    display: flex;
+}
+
+.task-list-container {
+    margin: 2em;
+    padding: 3em 2em;
+    border: 1px solid black;
+}
+
+.task-name,
+.task-list,
+.task.info {
+    color: blue;
+}
+
+.tasks-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

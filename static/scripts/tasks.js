@@ -3,11 +3,21 @@ import { logoutUser } from "./logout-user.js";
 const logoutBtn = document.getElementById("logout-button");
 const userId = sessionStorage.getItem("UserId");
 const admin = sessionStorage.getItem("admin");
-const addTasksModal = document.getElementById("add-tasks-modal");
-const addTasksForm = document.getElementById("add-tasks-form");
+const createTaskListModal = document.getElementById("create-task-list-modal");
+const createTaskListForm = document.getElementById("create-task-list-form");
 const tasksSection = document.getElementById("tasks-section");
-const addTasksCloseBtn = document.getElementById("add-tasks-close-btn");
+const createTaskListCloseBtn = document.getElementById(
+    "create-task-list-close-btn"
+);
 const responseMessage = document.getElementById("response-message");
+const updateTasksModal = document.getElementById("update-tasks-modal");
+const updateTasksForm = document.getElementById("update-tasks-form");
+const updateTasksCloseBtn = document.getElementById("update-tasks-close-btn");
+const updateTasksInputContainer = document.getElementById(
+    "update-tasks-input-container"
+);
+const addSingleTaskModal = document.getElementById("add-task-modal");
+const addTaskCloseBtn = document.getElementById("add-tasks-close-btn");
 
 function createTaskElements(taskData) {
     const taskListContainer = document.createElement("div");
@@ -22,10 +32,36 @@ function createTaskElements(taskData) {
     taskListContainer.append(taskList);
     taskData.task_list.forEach((task) => {
         const taskInfo = document.createElement("li");
-        taskInfo.classList.add("schedule-info");
+        taskInfo.classList.add("task-info");
         taskInfo.textContent = task;
         taskList.append(taskInfo);
     });
+    if (admin === "true") {
+        const addSingleTaskBtn = document.createElement("button");
+        addSingleTaskBtn.classList.add("form-button");
+        addSingleTaskBtn.textContent = "Add Task";
+        addSingleTaskBtn.addEventListener("click", () => {
+            addSingleTaskModal.showModal();
+        });
+        taskListContainer.append(addSingleTaskBtn);
+        const updateTaskListBtn = document.createElement("button");
+        updateTaskListBtn.classList.add("form-button");
+        updateTaskListBtn.textContent = "Update task list";
+        updateTaskListBtn.addEventListener("click", () => {
+            updateTasksModal.showModal();
+            updateTasksForm.dataset.id = taskData.user_id;
+            updateTasksForm.dataset.tasks = taskData.task_list;
+            addUpdateTasksInputs();
+        });
+        taskListContainer.append(updateTaskListBtn);
+        const deleteTaskListBtn = document.createElement("button");
+        deleteTaskListBtn.classList.add("form-button");
+        deleteTaskListBtn.textContent = "Delete task list";
+        deleteTaskListBtn.addEventListener("click", () => {
+            deleteTasks(taskData.user_id);
+        });
+        taskListContainer.append(deleteTaskListBtn);
+    }
 }
 
 async function getUserTasks(id) {
@@ -55,9 +91,9 @@ async function getAllTasks() {
         });
         const addTasksBtn = document.createElement("button");
         addTasksBtn.addEventListener("click", () => {
-            addTasksModal.showModal();
+            createTaskListModal.showModal();
         });
-        addTasksBtn.textContent = "Add Tasks";
+        addTasksBtn.textContent = "Create new task list";
         addTasksBtn.classList.add("form-button");
         tasksSection.append(addTasksBtn);
     } catch (err) {
@@ -95,8 +131,8 @@ async function createTasks(e) {
             const data = await response.json();
             console.log(data.msg);
             getAllTasks();
-            addTasksForm.reset();
-            addTasksModal.close();
+            createTaskListForm.reset();
+            createTaskListModal.close();
         }
     } catch (err) {
         console.error(err);
@@ -104,11 +140,88 @@ async function createTasks(e) {
     }
 }
 
-addTasksForm.addEventListener("submit", createTasks);
+async function updateTasks(e) {
+    try {
+        e.preventDefault();
+        const id = updateTasksForm.dataset.id;
+        const tasksDataInitial = new FormData(e.target);
+        const tasksDataFinal = {
+            taskInfo: [],
+        };
+        for (const entry of tasksDataInitial.entries()) {
+            tasksDataFinal.taskInfo.push(entry[1]);
+        }
+        const response = await fetch(`/api/v1/tasks/${id}`, {
+            method: "PATCH",
+            body: JSON.stringify(tasksDataFinal),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`Error getting task list data: ${response.status}`);
+        } else {
+            const data = await response.json();
+            console.log(data.msg);
+            getAllTasks();
+            updateTasksForm.reset();
+            updateTasksModal.close();
+        }
+    } catch (err) {
+        responseMessage.textContent = `Error updating task list: ${err}`;
+        console.error(err);
+    }
+}
+
+async function deleteTasks(id) {
+    try {
+        const response = await fetch(`/api/v1/tasks/${id}`, {
+            method: "DELETE",
+        });
+        if (!response.ok) {
+            throw new Error(`Response status error: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data.msg);
+        getAllTasks();
+    } catch (err) {
+        responseMessage.textContent = `Error deleting task list: ${err}`;
+        console.error(err);
+    }
+}
+
+function addUpdateTasksInputs() {
+    const taskList = updateTasksForm.dataset.tasks.split(",");
+    updateTasksInputContainer.replaceChildren();
+    taskList.forEach((task, index) => {
+        const updateTaskLabel = document.createElement("label");
+        updateTaskLabel.textContent = "Task:";
+        updateTaskLabel.for = `update-task-${index}`;
+        updateTasksInputContainer.append(updateTaskLabel);
+        const updateTaskInput = document.createElement("input");
+        updateTaskInput.id = `update-task-${index}`;
+        updateTaskInput.value = task;
+        updateTaskInput.type = "text";
+        updateTaskInput.name = `task-${index}`;
+        updateTaskInput.pattern = "[a-zA-Z0-9 -]+";
+        updateTaskInput.minLength = "4";
+        updateTaskInput.maxLength = "60";
+        updateTasksInputContainer.append(updateTaskInput);
+    });
+}
+
+createTaskListForm.addEventListener("submit", createTasks);
+updateTasksForm.addEventListener("submit", updateTasks);
+updateTasksCloseBtn.addEventListener("click", () => {
+    updateTasksModal.close();
+});
+addTaskCloseBtn.addEventListener("click", () => {
+    addSingleTaskModal.close();
+});
 
 logoutBtn.addEventListener("click", logoutUser);
-addTasksCloseBtn.addEventListener("click", () => {
-    addTasksModal.close();
+createTaskListCloseBtn.addEventListener("click", () => {
+    createTaskListModal.close();
 });
 
 if (userId === null || admin === null) {

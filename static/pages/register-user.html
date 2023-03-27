@@ -50,7 +50,7 @@
                     id="register-username-input"
                     type="text"
                     name="username"
-                    pattern="[a-zA-Z0-9 -.]+"
+                    pattern="^[a-zA-Z0-9 .-]+$"
                     minlength="4"
                     maxlength="20"
                     required
@@ -60,14 +60,18 @@
                     id="register-password-input"
                     type="password"
                     name="password"
-                    pattern="[a-zA-Z0-9 -.]+"
+                    pattern="^[a-zA-Z0-9 .-]+$"
                     minlength="4"
                     maxlength="20"
                     required
                 />
                 <label for="register-admin-input">Admin:</label>
                 <input id="register-admin-input" type="checkbox" name="admin" />
-                <button id="register-user-submit-button" type="submit">
+                <button
+                    id="register-user-submit-button"
+                    type="submit"
+                    class="form-button"
+                >
                     Submit
                 </button>
                 <p id="error-message"></p>

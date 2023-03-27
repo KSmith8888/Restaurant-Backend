@@ -202,6 +202,7 @@ function addUpdateScheduleInputs() {
         updateScheduleInputContainer.append(updateDayLabel);
         const updateDayInput = document.createElement("input");
         updateDayInput.id = `update-schedule-${days[index]}`;
+        updateDayInput.pattern = "^[a-zA-Z0-9 .:-]+$";
         updateDayInput.type = "text";
         updateDayInput.value = day;
         updateDayInput.name = `schedule-${days[index]}`;

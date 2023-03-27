@@ -88,10 +88,14 @@ input::file-selector-button:focus,
     width: 40%;
     height: 100%;
     margin: 0 5em;
+    padding: 1em;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
+    border: 2px solid grey;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 5px;
 }
 
 .current-menu-heading {
@@ -105,7 +109,7 @@ input::file-selector-button:focus,
     width: 45%;
     padding: 1em;
     margin: 0.5em;
-    border: 1px solid grey;
+    border: 1px solid #5c5c5c;
     border-radius: 5px;
     text-align: center;
 }

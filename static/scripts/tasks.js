@@ -192,7 +192,7 @@ function addUpdateTasksInputs() {
         updateTaskInput.value = task;
         updateTaskInput.type = "text";
         updateTaskInput.name = `task-${index}`;
-        updateTaskInput.pattern = "[a-zA-Z0-9 -]+";
+        updateTaskInput.pattern = "^[a-zA-Z0-9 .-]+$";
         updateTaskInput.minLength = "4";
         updateTaskInput.maxLength = "60";
         updateTasksInputContainer.append(updateTaskInput);

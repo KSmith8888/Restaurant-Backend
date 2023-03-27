@@ -1,6 +1,6 @@
 function sanitizeChars(req, res, next) {
     try {
-        const reg = new RegExp("^[a-zA-Z0-9 .-]+$");
+        const reg = new RegExp("^[a-zA-Z0-9 .:-]+$");
         if (!reg.test(req.params.id)) {
             throw new Error("Param id not valid");
         }

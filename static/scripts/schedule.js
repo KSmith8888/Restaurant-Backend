@@ -139,15 +139,14 @@ async function updateSchedule(e) {
         e.preventDefault();
         const id = updateScheduleForm.dataset.user_id;
         const scheduleDataInitial = new FormData(e.target);
-        const scheduleDataFinal = {
-            scheduleInfo: [],
-        };
+        const scheduleInfo = [];
+
         for (const entry of scheduleDataInitial.entries()) {
-            scheduleDataFinal.scheduleInfo.push(entry[1]);
+            scheduleInfo.push(entry[1]);
         }
         const response = await fetch(`/api/v1/schedule/${id}`, {
             method: "PATCH",
-            body: JSON.stringify(scheduleDataFinal),
+            body: JSON.stringify(scheduleInfo),
             headers: {
                 "Content-Type": "application/json",
             },

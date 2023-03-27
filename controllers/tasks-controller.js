@@ -107,6 +107,7 @@ const updateUserTaskList = async (req, res) => {
         if (!req.userId) {
             throw new Error("User id not applied from token");
         }
+        console.log(req.body);
         const paramId = req.params.id;
         const requestedSchedule = await TaskList.findOne({
             user_id: String(paramId),
@@ -114,7 +115,7 @@ const updateUserTaskList = async (req, res) => {
         if (!requestedSchedule) {
             throw new Error("No task list found");
         }
-        const taskData = req.body.taskInfo;
+        const taskData = req.body;
         if (!taskData) {
             throw new Error("No task list provided");
         }

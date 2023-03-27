@@ -44,7 +44,9 @@
         </nav>
         <main class="main">
             <p id="response-message"></p>
-            <section id="tasks-section"></section>
+            <section id="tasks-section">
+                <div id="tasks-data-container"></div>
+            </section>
             <dialog id="create-task-list-modal">
                 <form id="create-task-list-form">
                     <h2>Create new task list</h2>
@@ -92,50 +94,6 @@
                     </div>
                 </form>
             </dialog>
-            <dialog id="add-task-modal">
-                <form id="add-task-form">
-                    <h2>Add Task</h2>
-                    <div id="add-task-container" class="tasks-input-container">
-                        <label for="add-task-name-input">Name:</label>
-                        <input
-                            id="add-task-name-input"
-                            type="text"
-                            name="name"
-                            pattern="[a-zA-Z0-9 -]+"
-                            minlength="4"
-                            maxlength="20"
-                            required
-                        />
-
-                        <label for="add-task-1">Task:</label>
-                        <input
-                            id="add-task-1"
-                            type="text"
-                            name="task-1"
-                            pattern="[a-zA-Z0-9 -]+"
-                            minlength="4"
-                            maxlength="60"
-                            required
-                        />
-                    </div>
-                    <div class="button-container">
-                        <button
-                            id="add-tasks-close-btn"
-                            type="button"
-                            class="form-button"
-                        >
-                            Close
-                        </button>
-                        <button
-                            id="add-tasks-submit-btn"
-                            type="submit"
-                            class="form-button"
-                        >
-                            Submit
-                        </button>
-                    </div>
-                </form>
-            </dialog>
             <dialog id="update-tasks-modal">
                 <form id="update-tasks-form">
                     <h2>Update Tasks</h2>
@@ -144,6 +102,13 @@
                         class="tasks-input-container"
                     ></div>
                     <div class="button-container">
+                        <button
+                            id="add-single-task-btn"
+                            type="button"
+                            class="form-button"
+                        >
+                            Add Task
+                        </button>
                         <button
                             id="update-tasks-close-btn"
                             type="button"

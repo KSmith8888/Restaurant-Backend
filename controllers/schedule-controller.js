@@ -99,7 +99,7 @@ const updateSchedule = async (req, res) => {
         if (!requestedSchedule) {
             throw new Error("No schedule found");
         }
-        const scheduleData = req.body.scheduleInfo;
+        const scheduleData = req.body;
         if (!scheduleData || typeof scheduleData !== "object") {
             throw new Error("No username or schedule provided");
         }

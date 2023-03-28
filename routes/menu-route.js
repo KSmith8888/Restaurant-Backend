@@ -1,9 +1,9 @@
 import express from "express";
 import multer from "multer";
 
-import { storage } from "../middleware/multer.js";
+import { multStorage, multFilter } from "../middleware/multer.js";
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: multStorage, fileFilter: multFilter });
 
 import {
     getAllMenuItems,

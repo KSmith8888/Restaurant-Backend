@@ -1,8 +1,8 @@
 .main {
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
 #register-user-profile-form {
@@ -16,4 +16,39 @@
     border: 2px solid grey;
     box-shadow: 2px 2px 2px black;
     border-radius: 5px;
+}
+
+#users-section {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.user-container {
+    width: 45%;
+    padding: 1em;
+    border: 2px solid grey;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 5px;
+}
+
+.user-name {
+    font-size: 1.2rem;
+}
+
+.user-role {
+    font-size: 1.1rem;
+}
+
+#update-role-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#update-role-modal[open] {
+    padding: 1em 2em;
+    background-color: rgb(151, 164, 175);
+    border: 2px solid black;
 }

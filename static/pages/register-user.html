@@ -76,6 +76,46 @@
                 </button>
                 <p id="error-message"></p>
             </form>
+            <section id="users-section"></section>
+            <dialog id="update-role-modal">
+                <form id="update-role-form">
+                    <h2>Update User Role</h2>
+                    <p id="update-form-name">Update name here</p>
+                    <fieldset>
+                        <legend>Select User Role:</legend>
+                        <label for="update-role-input-user">User</label>
+                        <input
+                            id="update-role-input-user"
+                            type="radio"
+                            name="role"
+                            value="User"
+                        />
+                        <label for="update-role-input-admin">Admin</label>
+                        <input
+                            id="update-role-input-admin"
+                            type="radio"
+                            name="role"
+                            value="Admin"
+                        />
+                        <div class="button-container">
+                            <button
+                                id="role-modal-close-btn"
+                                class="form-button"
+                                type="button"
+                            >
+                                Close
+                            </button>
+                            <button
+                                id="role-modal-submit-btn"
+                                class="form-button"
+                                type="submit"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            </dialog>
         </main>
         <footer class="footer">
             <small class="footer-text"

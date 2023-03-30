@@ -13,6 +13,7 @@ const updateRoleForm = document.getElementById("update-role-form");
 const updateFormName = document.getElementById("update-form-name");
 const updateRoleInputUser = document.getElementById("update-role-input-user");
 const updateRoleInputAdmin = document.getElementById("update-role-input-admin");
+const usernameText = document.getElementById("username-text");
 
 registrationForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -75,7 +76,7 @@ async function getAllUsers() {
             updateRoleBtn.classList.add("form-button");
             updateRoleBtn.textContent = "Update Role";
             updateRoleBtn.addEventListener("click", () => {
-                updateFormName.textContent = user.username;
+                updateFormName.textContent = `Name: ${user.username}`;
                 if (user.admin) {
                     updateRoleInputAdmin.checked = "true";
                 } else {
@@ -148,4 +149,7 @@ roleModalCloseBtn.addEventListener("click", () => {
     updateRoleModal.close();
 });
 updateRoleForm.addEventListener("submit", updateUserRole);
+usernameText.textContent = `Welcome back, ${sessionStorage.getItem(
+    "username"
+)}`;
 getAllUsers();

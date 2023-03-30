@@ -18,6 +18,7 @@ const updateTasksInputContainer = document.getElementById(
 );
 const addSingleTaskBtn = document.getElementById("add-single-task-btn");
 const tasksDataContainer = document.getElementById("tasks-data-container");
+const usernameText = document.getElementById("username-text");
 
 function createTaskElements(taskData) {
     const taskListContainer = document.createElement("div");
@@ -215,6 +216,9 @@ logoutBtn.addEventListener("click", logoutUser);
 createTaskListCloseBtn.addEventListener("click", () => {
     createTaskListModal.close();
 });
+usernameText.textContent = `Welcome back, ${sessionStorage.getItem(
+    "username"
+)}`;
 
 if (userId === null || admin === null) {
     console.error("Credentials not valid");

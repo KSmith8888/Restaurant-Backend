@@ -17,6 +17,7 @@ const updateScheduleInputContainer = document.getElementById(
     "update-schedule-input-container"
 );
 const scheduleDataSection = document.getElementById("schedule-data-section");
+const usernameText = document.getElementById("username-text");
 
 async function getAllSchedules() {
     try {
@@ -219,6 +220,9 @@ updateScheduleCloseBtn.addEventListener("click", () =>
     updateScheduleModal.close()
 );
 updateScheduleForm.addEventListener("submit", updateSchedule);
+usernameText.textContent = `Welcome back, ${sessionStorage.getItem(
+    "username"
+)}`;
 
 if (userId === null || admin === null) {
     console.error("Credentials not valid");

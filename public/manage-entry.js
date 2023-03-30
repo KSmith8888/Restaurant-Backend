@@ -33,6 +33,7 @@ loginForm.addEventListener("submit", async (e) => {
         }
         const data = await response.json();
         sessionStorage.setItem("UserId", data.id);
+        sessionStorage.setItem("username", data.username);
         sessionStorage.setItem("admin", data.admin);
         errorMessage.textContent = data.msg;
         location.href = "http://127.0.0.1:3000/pages/schedule.html";

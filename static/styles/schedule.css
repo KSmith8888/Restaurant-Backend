@@ -42,6 +42,6 @@
 #add-schedule-modal[open],
 #update-schedule-modal[open] {
     padding: 1em 2em;
-    background-color: rgb(151, 164, 175);
+    background-color: #fff;
     border: 2px solid black;
 }

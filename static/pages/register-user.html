@@ -15,6 +15,7 @@
     <body>
         <header class="header">
             <h1 class="main-heading">User Profile Registration Page</h1>
+            <p id="username-text"></p>
             <button id="logout-button" type="button">Logout</button>
         </header>
         <nav class="navbar">
@@ -80,7 +81,7 @@
             <dialog id="update-role-modal">
                 <form id="update-role-form">
                     <h2>Update User Role</h2>
-                    <p id="update-form-name">Update name here</p>
+                    <p id="update-form-name"></p>
                     <fieldset>
                         <legend>Select User Role:</legend>
                         <label for="update-role-input-user">User</label>
@@ -97,23 +98,23 @@
                             name="role"
                             value="Admin"
                         />
-                        <div class="button-container">
-                            <button
-                                id="role-modal-close-btn"
-                                class="form-button"
-                                type="button"
-                            >
-                                Close
-                            </button>
-                            <button
-                                id="role-modal-submit-btn"
-                                class="form-button"
-                                type="submit"
-                            >
-                                Submit
-                            </button>
-                        </div>
                     </fieldset>
+                    <div class="button-container">
+                        <button
+                            id="role-modal-close-btn"
+                            class="form-button"
+                            type="button"
+                        >
+                            Close
+                        </button>
+                        <button
+                            id="role-modal-submit-btn"
+                            class="form-button"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+                    </div>
                 </form>
             </dialog>
         </main>

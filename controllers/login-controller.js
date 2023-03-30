@@ -53,6 +53,7 @@ const loginAttempt = async (req, res) => {
             msg: "Logged in successfully",
             id: dbUser._id,
             admin: dbUser.admin,
+            username: dbUser.username,
         });
     } catch (err) {
         console.error(err);

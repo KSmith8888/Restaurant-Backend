@@ -12,6 +12,7 @@ const updateDescriptionInput = document.getElementById(
     "update-description-input"
 );
 const logoutBtn = document.getElementById("logout-button");
+const usernameText = document.getElementById("username-text");
 
 async function createMenuItem(e) {
     e.preventDefault();
@@ -158,5 +159,7 @@ closeMenuModalBtn.addEventListener("click", () => {
     updateMenuItemModal.close();
 });
 logoutBtn.addEventListener("click", logoutUser);
-
+usernameText.textContent = `Welcome back, ${sessionStorage.getItem(
+    "username"
+)}`;
 getAllMenuItems();

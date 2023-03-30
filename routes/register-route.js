@@ -5,7 +5,7 @@ import { authorizeUser, authorizeAdmin } from "../middleware/authorize.js";
 import {
     createAccount,
     getAllUsers,
-    getUser,
+    updateUserRole,
     deleteUser,
 } from "../controllers/register-controller.js";
 
@@ -19,12 +19,12 @@ registerRouter.post(
     createAccount
 );
 registerRouter.get("/", authorizeUser, authorizeAdmin, getAllUsers);
-registerRouter.get(
+registerRouter.patch(
     "/:id",
     sanitizeChars,
     authorizeUser,
     authorizeAdmin,
-    getUser
+    updateUserRole
 );
 registerRouter.delete(
     "/:id",

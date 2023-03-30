@@ -81,8 +81,8 @@ async function getAllUsers() {
                 } else {
                     updateRoleInputUser.checked = "true";
                 }
+                updateRoleForm.dataset.id = user._id;
                 updateRoleModal.showModal();
-                console.log(role);
             });
             userContainer.append(updateRoleBtn);
             const deleteUserBtn = document.createElement("button");
@@ -93,6 +93,32 @@ async function getAllUsers() {
             });
             userContainer.append(deleteUserBtn);
         });
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function updateUserRole(e) {
+    try {
+        const roleForm = new FormData(e.target);
+        const roleInfo = roleForm.get("role");
+        const id = updateRoleForm.dataset.id;
+        const response = await fetch(
+            `http://127.0.0.1:3000/api/v1/register/${id}`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ Role: roleInfo }),
+            }
+        );
+        if (!response.ok) {
+            throw new Error(`Status error: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data.msg);
+        getAllUsers();
     } catch (err) {
         console.error(err);
     }
@@ -121,7 +147,5 @@ logoutBtn.addEventListener("click", logoutUser);
 roleModalCloseBtn.addEventListener("click", () => {
     updateRoleModal.close();
 });
-updateRoleForm.addEventListener("submit", () => {
-    console.log("test");
-});
+updateRoleForm.addEventListener("submit", updateUserRole);
 getAllUsers();

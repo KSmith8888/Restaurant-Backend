@@ -1,7 +1,7 @@
 function sanitizeChars(req, res, next) {
     try {
         const reg = new RegExp("^[a-zA-Z0-9 .:-]+$");
-        if (!reg.test(req.params.id)) {
+        if (req.params.id && !reg.test(req.params.id)) {
             throw new Error("Param id not valid");
         }
         const bodyValues = Object.values(req.body);
@@ -9,7 +9,13 @@ function sanitizeChars(req, res, next) {
             if (value === "") {
                 value = undefined;
             }
-            if (!reg.test(value)) {
+            if (Array.isArray(value)) {
+                value.forEach((str) => {
+                    if (!reg.test(str)) {
+                        throw new Error("User input not valid");
+                    }
+                });
+            } else if (!reg.test(value)) {
                 throw new Error("User input not valid");
             }
         }

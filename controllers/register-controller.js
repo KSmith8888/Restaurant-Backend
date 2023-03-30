@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 
 import { User } from "../models/user-model.js";
+import { Schedule } from "../models/schedule-model.js";
+import { TaskList } from "../models/task-list-model.js";
 
 const createAccount = async (req, res) => {
     try {
@@ -19,7 +21,7 @@ const createAccount = async (req, res) => {
             admin: isAdmin,
         };
         await User.create(userInfo);
-        res.status(200);
+        res.status(201);
         res.json({
             msg: "New user created successfully",
         });
@@ -57,7 +59,7 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-const getUser = async (req, res) => {
+const updateUserRole = async (req, res) => {
     try {
         res.header(
             "Strict-Transport-Security",
@@ -67,9 +69,19 @@ const getUser = async (req, res) => {
             throw new Error("User id not applied from token");
         }
         const paramId = req.params.id;
-        const requestedUser = await User.findOne({ _id: paramId });
+        const newRole = req.body.Role === "Admin" ? true : false;
+        await User.findByIdAndUpdate(
+            {
+                _id: paramId,
+            },
+            {
+                $set: {
+                    admin: newRole,
+                },
+            }
+        );
         res.status(200);
-        res.json(requestedUser);
+        res.json({ msg: "User role updated successfully" });
     } catch (err) {
         console.error(err);
         res.status(500);
@@ -89,9 +101,15 @@ const deleteUser = async (req, res) => {
             throw new Error("User id not applied from token");
         }
         const paramId = req.params.id;
-        await User.findOneAndDelete({ _id: paramId });
-        res.status(200);
-        res.json({ msg: "User deleted successfully" });
+        if (req.userId !== paramId) {
+            await User.findOneAndDelete({ _id: String(paramId) });
+            await Schedule.findOneAndDelete({ user_id: String(paramId) });
+            await TaskList.findOneAndDelete({ user_id: String(paramId) });
+            res.status(200);
+            res.json({ msg: "User data deleted successfully" });
+        } else {
+            throw new Error("You cannot delete your own account");
+        }
     } catch (err) {
         console.error(err);
         res.status(500);
@@ -101,4 +119,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-export { createAccount, getAllUsers, getUser, deleteUser };
+export { createAccount, getAllUsers, updateUserRole, deleteUser };

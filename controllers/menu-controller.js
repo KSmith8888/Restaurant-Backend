@@ -1,4 +1,12 @@
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
 import { MenuItem } from "../models/menu-item-model.js";
+
+const fileName = fileURLToPath(import.meta.url);
+const cwd = path.dirname(fileName);
+const rootDirectory = path.dirname(cwd);
 
 const getAllMenuItems = async (req, res) => {
     try {
@@ -125,6 +133,16 @@ const deleteMenuItem = async (req, res) => {
             "max-age=31536000; includeSubDomains"
         );
         const paramId = req.params.id;
+        const itemToBeDeleted = await MenuItem.findOne({ _id: paramId });
+        if (!itemToBeDeleted) {
+            throw new Error("No menu item found with that id");
+        }
+        const pathArray = itemToBeDeleted.path.split("uploads");
+        fs.unlink(`${rootDirectory}/public/uploads${pathArray[1]}`, (err) => {
+            if (err) {
+                throw new Error(`Error deleting file: ${err}`);
+            }
+        });
         await MenuItem.findOneAndDelete({ _id: paramId });
         res.status(200);
         res.json({ msg: "Item deleted successfully" });

@@ -56,3 +56,10 @@
     padding: 1em 2em;
     border: 2px solid black;
 }
+
+@media (max-width: 950px) {
+    .task-list-container {
+        width: 90%;
+        margin: 1em;
+    }
+}

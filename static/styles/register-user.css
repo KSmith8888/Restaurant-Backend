@@ -27,6 +27,7 @@
 
 .user-container {
     width: 45%;
+    text-align: center;
     padding: 1em;
     border: 2px solid grey;
     box-shadow: 2px 2px 2px black;
@@ -51,4 +52,20 @@
     padding: 1em 2em;
     background-color: #fff;
     border: 2px solid black;
+}
+
+@media (max-width: 950px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+    #register-user-profile-form {
+        width: 95%;
+    }
+
+    #users-section {
+        width: 95%;
+        justify-content: space-around;
+        margin: 1em 0;
+    }
 }

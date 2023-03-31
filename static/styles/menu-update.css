@@ -134,7 +134,14 @@ input::file-selector-button:focus,
         align-items: center;
     }
     #current-menu-section {
-        width: 90%;
+        width: 95%;
         margin: 1em 0 0 0;
+    }
+    .menu-item-container {
+        width: 95%;
+        display: flex;
+    }
+    #add-menu-item-form {
+        width: 95%;
     }
 }

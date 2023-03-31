@@ -81,3 +81,16 @@ img {
     padding: 3em;
     text-align: center;
 }
+
+@media (max-width: 950px) {
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-item {
+        margin: 0.5em 0;
+    }
+    #login-form {
+        width: 95%;
+    }
+}

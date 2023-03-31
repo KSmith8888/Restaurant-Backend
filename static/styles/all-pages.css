@@ -14,7 +14,12 @@ img {
     max-width: 100%;
 }
 
+dialog[open] {
+    max-width: 95%;
+}
+
 .header {
+    width: 100%;
     padding: 2em;
     text-align: center;
     border-bottom: 3px solid yellow;
@@ -38,12 +43,22 @@ img {
 
 .navbar {
     margin: 1em 0;
+}
+
+.nav-list {
+    padding: 0;
+    list-style: none;
     display: flex;
     justify-content: space-around;
 }
 
 .active-nav-link {
     color: red;
+}
+
+.nav-item {
+    text-align: center;
+    padding: 0;
 }
 
 #response-message {
@@ -73,4 +88,14 @@ img {
 .footer {
     padding: 3em;
     text-align: center;
+}
+
+@media (max-width: 950px) {
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-item {
+        margin: 0.5em 0;
+    }
 }

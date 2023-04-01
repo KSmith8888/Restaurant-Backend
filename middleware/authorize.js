@@ -1,6 +1,12 @@
 import jwt from "jsonwebtoken";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import { User } from "../models/user-model.js";
+
+const fileName = fileURLToPath(import.meta.url);
+const cwd = path.dirname(fileName);
+const rootDirectory = path.dirname(cwd);
 
 async function authorizeUser(req, res, next) {
     try {
@@ -34,9 +40,7 @@ async function authorizeUser(req, res, next) {
         console.error(err);
         if (err.message.startsWith("Credential Error:")) {
             res.status(401);
-            res.json({
-                msg: "Provided credentials do not match",
-            });
+            res.sendFile(`${rootDirectory}/public/not-authorized.html`);
         } else {
             res.status(500);
             res.json({
@@ -66,7 +70,7 @@ function authorizeAdmin(req, res, next) {
     } catch (err) {
         console.error(err);
         res.status(403);
-        res.json({ msg: "Access denied" });
+        res.sendFile(`${rootDirectory}/public/not-authorized.html`);
     }
 }
 

@@ -38,8 +38,18 @@ img {
 
 .navbar {
     margin: 1em 0;
+}
+
+.nav-list {
+    padding: 0;
+    list-style: none;
     display: flex;
     justify-content: space-around;
+}
+
+.nav-item {
+    text-align: center;
+    padding: 0;
 }
 
 .main {

@@ -53,19 +53,27 @@ const updateUserRole = wrapper(async (req, res) => {
         throw new Error("User id not applied from token");
     }
     const paramId = req.params.id;
-    const newRole = req.body.Role === "Admin" ? true : false;
+    const dbUser = await User.findOne({
+        _id: String(paramId),
+    });
+    if (!dbUser) {
+        throw new Error("Not Found Error: No user with that id");
+    }
+    const newName = req.body.name ? req.body.name : dbUser.username;
+    const newRole = req.body.role === "Admin" ? true : false;
     await User.findByIdAndUpdate(
         {
             _id: paramId,
         },
         {
             $set: {
+                username: newName,
                 admin: newRole,
             },
         }
     );
     res.status(200);
-    res.json({ msg: "User role updated successfully" });
+    res.json({ msg: "User info updated successfully" });
 });
 
 const deleteUser = wrapper(async (req, res) => {

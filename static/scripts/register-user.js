@@ -8,9 +8,9 @@ const adminInput = document.getElementById("register-admin-input");
 const logoutBtn = document.getElementById("logout-button");
 const usersSection = document.getElementById("users-section");
 const roleModalCloseBtn = document.getElementById("role-modal-close-btn");
-const updateRoleModal = document.getElementById("update-role-modal");
-const updateRoleForm = document.getElementById("update-role-form");
-const updateFormName = document.getElementById("update-form-name");
+const updateInfoModal = document.getElementById("update-info-modal");
+const updateInfoForm = document.getElementById("update-info-form");
+const updateNameInput = document.getElementById("update-name-input");
 const updateRoleInputUser = document.getElementById("update-role-input-user");
 const updateRoleInputAdmin = document.getElementById("update-role-input-admin");
 const usernameText = document.getElementById("username-text");
@@ -72,20 +72,20 @@ async function getAllUsers() {
             roleEl.classList.add("user-role");
             roleEl.textContent = `Role: ${role}`;
             userContainer.append(roleEl);
-            const updateRoleBtn = document.createElement("button");
-            updateRoleBtn.classList.add("form-button");
-            updateRoleBtn.textContent = "Update Role";
-            updateRoleBtn.addEventListener("click", () => {
-                updateFormName.textContent = `Name: ${user.username}`;
+            const updateInfoBtn = document.createElement("button");
+            updateInfoBtn.classList.add("form-button");
+            updateInfoBtn.textContent = "Update Info";
+            updateInfoBtn.addEventListener("click", () => {
+                updateNameInput.value = user.username;
                 if (user.admin) {
                     updateRoleInputAdmin.checked = "true";
                 } else {
                     updateRoleInputUser.checked = "true";
                 }
-                updateRoleForm.dataset.id = user._id;
-                updateRoleModal.showModal();
+                updateInfoForm.dataset.id = user._id;
+                updateInfoModal.showModal();
             });
-            userContainer.append(updateRoleBtn);
+            userContainer.append(updateInfoBtn);
             const deleteUserBtn = document.createElement("button");
             deleteUserBtn.classList.add("form-button");
             deleteUserBtn.textContent = "Delete User";
@@ -101,9 +101,10 @@ async function getAllUsers() {
 
 async function updateUserRole(e) {
     try {
-        const roleForm = new FormData(e.target);
-        const roleInfo = roleForm.get("role");
-        const id = updateRoleForm.dataset.id;
+        const userInfoForm = new FormData(e.target);
+        const nameInfo = userInfoForm.get("name");
+        const roleInfo = userInfoForm.get("role");
+        const id = updateInfoForm.dataset.id;
         const response = await fetch(
             `http://127.0.0.1:3000/api/v1/register/${id}`,
             {
@@ -111,7 +112,7 @@ async function updateUserRole(e) {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ Role: roleInfo }),
+                body: JSON.stringify({ name: nameInfo, role: roleInfo }),
             }
         );
         if (!response.ok) {
@@ -146,9 +147,9 @@ async function deleteUser(id) {
 
 logoutBtn.addEventListener("click", logoutUser);
 roleModalCloseBtn.addEventListener("click", () => {
-    updateRoleModal.close();
+    updateInfoModal.close();
 });
-updateRoleForm.addEventListener("submit", updateUserRole);
+updateInfoForm.addEventListener("submit", updateUserRole);
 usernameText.textContent = `Welcome back, ${sessionStorage.getItem(
     "username"
 )}`;

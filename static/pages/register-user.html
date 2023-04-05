@@ -81,10 +81,18 @@
                 <p id="error-message"></p>
             </form>
             <section id="users-section"></section>
-            <dialog id="update-role-modal">
-                <form id="update-role-form">
-                    <h2>Update User Role</h2>
-                    <p id="update-form-name"></p>
+            <dialog id="update-info-modal">
+                <form id="update-info-form">
+                    <h2 id="update-info-form-heading">Update User Info</h2>
+                    <label for="update-name-input">Update User Name:</label>
+                    <input
+                        id="update-name-input"
+                        type="text"
+                        name="name"
+                        pattern="^[a-zA-Z0-9 .-]+$"
+                        minlength="4"
+                        maxlength="20"
+                    />
                     <fieldset>
                         <legend>Select User Role:</legend>
                         <label for="update-role-input-user">User</label>

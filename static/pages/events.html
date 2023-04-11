@@ -7,13 +7,21 @@
             content="default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; img-src 'self'"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="./manage-entry.css" />
-        <script src="./manage-entry.js" type="module"></script>
-        <title>Breakfast for Dinner</title>
+        <link rel="stylesheet" href="../styles/all-pages.css" />
+        <link rel="stylesheet" href="../styles/events.css" />
+        <script src="../scripts/events.js" type="module"></script>
+        <title>Events</title>
     </head>
     <body>
         <header class="header">
-            <h1 class="main-heading">Breakfast for Dinner</h1>
+            <div class="header-info-container"></div>
+            <h1 class="main-heading">Menu Information</h1>
+            <div class="header-info-container">
+                <p id="username-text"></p>
+                <button id="logout-button" class="form-button" type="button">
+                    Logout
+                </button>
+            </div>
         </header>
         <nav class="navbar">
             <ul class="nav-list">
@@ -43,37 +51,15 @@
                     >
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/events.html" class="nav-link">Events</a>
+                    <a
+                        href="/pages/events.html"
+                        class="nav-link active-nav-link"
+                        >Events</a
+                    >
                 </li>
             </ul>
         </nav>
-        <main class="main">
-            <form id="login-form" autocomplete="off">
-                <h2>Login Form</h2>
-                <label for="username-input">Username:</label>
-                <input
-                    id="username-input"
-                    type="text"
-                    pattern="^[a-zA-Z0-9 .-]+$"
-                    minlength="4"
-                    maxlength="20"
-                    name="username"
-                    required
-                />
-                <label for="password-input">Password:</label>
-                <input
-                    id="password-input"
-                    type="password"
-                    pattern="^[a-zA-Z0-9 .-]+$"
-                    minlength="4"
-                    maxlength="20"
-                    name="password"
-                    required
-                />
-                <button id="login-submit-button" type="submit">Submit</button>
-                <p id="error-message"></p>
-            </form>
-        </main>
+        <main class="main"></main>
         <footer class="footer">
             <small class="footer-text"
                 >Legal information and disclosures can be found in our

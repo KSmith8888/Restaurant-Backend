@@ -150,7 +150,5 @@ roleModalCloseBtn.addEventListener("click", () => {
     updateInfoModal.close();
 });
 updateInfoForm.addEventListener("submit", updateUserRole);
-usernameText.textContent = `Welcome back, ${sessionStorage.getItem(
-    "username"
-)}`;
+usernameText.textContent = `User: ${sessionStorage.getItem("username")}`;
 getAllUsers();

@@ -159,7 +159,5 @@ closeMenuModalBtn.addEventListener("click", () => {
     updateMenuItemModal.close();
 });
 logoutBtn.addEventListener("click", logoutUser);
-usernameText.textContent = `Welcome back, ${sessionStorage.getItem(
-    "username"
-)}`;
+usernameText.textContent = `User: ${sessionStorage.getItem("username")}`;
 getAllMenuItems();

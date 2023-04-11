@@ -220,9 +220,7 @@ updateScheduleCloseBtn.addEventListener("click", () =>
     updateScheduleModal.close()
 );
 updateScheduleForm.addEventListener("submit", updateSchedule);
-usernameText.textContent = `Welcome back, ${sessionStorage.getItem(
-    "username"
-)}`;
+usernameText.textContent = `User: ${sessionStorage.getItem("username")}`;
 
 if (userId === null || admin === null) {
     console.error("Credentials not valid");

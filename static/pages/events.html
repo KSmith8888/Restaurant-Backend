@@ -15,7 +15,7 @@
     <body>
         <header class="header">
             <div class="header-info-container"></div>
-            <h1 class="main-heading">Menu Information</h1>
+            <h1 class="main-heading">Event Information</h1>
             <div class="header-info-container">
                 <p id="username-text"></p>
                 <button id="logout-button" class="form-button" type="button">
@@ -59,7 +59,48 @@
                 </li>
             </ul>
         </nav>
-        <main class="main"></main>
+        <main class="main">
+            <form id="add-event-form">
+                <h2>Add New Event</h2>
+                <label for="title-input">Title:</label>
+                <input
+                    id="title-input"
+                    name="title"
+                    type="text"
+                    minlength="4"
+                    maxlength="30"
+                    required
+                />
+                <label for="date-input">Date:</label>
+                <input
+                    id="date-input"
+                    name="date"
+                    type="date"
+                    min="2023/01/01"
+                    max="2099/12/31"
+                    required
+                />
+                <label for="content-input">Content:</label>
+                <textarea
+                    id="content-input"
+                    name="content"
+                    minlength="4"
+                    maxlength="180"
+                    rows="7"
+                    cols="30"
+                    required
+                ></textarea>
+                <button
+                    id="add-event-submit-btn"
+                    class="form-button"
+                    type="submit"
+                >
+                    Submit
+                </button>
+                <p id="add-event-error-message"></p>
+            </form>
+            <section id="events-section"></section>
+        </main>
         <footer class="footer">
             <small class="footer-text"
                 >Legal information and disclosures can be found in our

@@ -1,0 +1,38 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.event-container {
+    margin: 1em;
+    padding: 0.5em 1em;
+    border: 1px solid #5c5c5c;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#add-event-form {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 3em 5em;
+    border: 2px solid grey;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 5px;
+}
+
+#content-input {
+    resize: none;
+}
+
+#events-section {
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}

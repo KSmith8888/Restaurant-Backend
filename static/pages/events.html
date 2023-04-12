@@ -100,6 +100,53 @@
                 <p id="add-event-error-message"></p>
             </form>
             <section id="events-section"></section>
+            <dialog id="update-event-modal">
+                <form id="update-event-form">
+                    <h2>Update Event</h2>
+                    <label for="update-title-input">Title:</label>
+                    <input
+                        id="update-title-input"
+                        name="title"
+                        type="text"
+                        minlength="4"
+                        maxlength="30"
+                    />
+                    <label for="update-date-input">Date:</label>
+                    <input
+                        id="update-date-input"
+                        name="date"
+                        type="date"
+                        min="2023/01/01"
+                        max="2099/12/31"
+                    />
+                    <label for="update-content-input">Content:</label>
+                    <textarea
+                        id="update-content-input"
+                        name="content"
+                        minlength="4"
+                        maxlength="180"
+                        rows="7"
+                        cols="30"
+                    ></textarea>
+                    <div class="button-container">
+                        <button
+                            id="update-event-close-btn"
+                            type="button"
+                            class="form-button"
+                        >
+                            Close
+                        </button>
+                        <button
+                            id="update-event-submit-btn"
+                            class="form-button"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                    <p id="update-event-error-message"></p>
+                </form>
+            </dialog>
         </main>
         <footer class="footer">
             <small class="footer-text"

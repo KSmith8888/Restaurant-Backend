@@ -6,6 +6,7 @@
 }
 
 .event-container {
+    width: 45%;
     margin: 1em;
     padding: 0.5em 1em;
     border: 1px solid #5c5c5c;
@@ -35,4 +36,9 @@
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
+}
+
+#update-event-form {
+    display: flex;
+    flex-direction: column;
 }

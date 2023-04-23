@@ -6,7 +6,8 @@ async function logoutUser() {
         } else {
             sessionStorage.removeItem("UserId");
             sessionStorage.removeItem("admin");
-            location.href = "http://127.0.0.1:3000/";
+            location.href =
+                "https://restaurant-admin-production.up.railway.app/index.html";
         }
     } catch (err) {
         console.error(err);

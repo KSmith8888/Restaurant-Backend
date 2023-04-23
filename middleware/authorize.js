@@ -14,16 +14,19 @@ async function authorizeUser(req, res, next) {
         if (!cookies) {
             throw new Error("Credential Error: No cookies present in request");
         }
-        //const cookiesArray = cookies.split(";");
-        //console.log(cookiesArray, cookiesArray.length);
-        const cookieName = req.headers.cookie.split("=")[0];
-        if (cookieName !== "token") {
+        let tokenCookie;
+        const cookiesArray = cookies.split(";");
+        cookiesArray.forEach((cookie) => {
+            if (cookie.includes("token")) {
+                tokenCookie = cookie.split("=")[1];
+            }
+        });
+        if (!tokenCookie) {
             throw new Error(
                 "Credential Error: Token cookie not present in request"
             );
         }
-        const token = req.headers.cookie.split("=")[1];
-        const decodedClient = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedClient = jwt.verify(tokenCookie, process.env.JWT_SECRET);
         const id = decodedClient.id;
         const dbUser = await User.findOne({ _id: id });
         if (!dbUser) {

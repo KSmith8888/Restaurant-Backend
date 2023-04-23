@@ -21,13 +21,16 @@ loginForm.addEventListener("submit", async (e) => {
                 "Special characters are not allowed in credentials"
             );
         }
-        const response = await fetch("http://127.0.0.1:3000/api/v1/login", {
-            method: "POST",
-            body: JSON.stringify(loginInfo),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        const response = await fetch(
+            "https://restaurant-admin-production.up.railway.app/api/v1/login",
+            {
+                method: "POST",
+                body: JSON.stringify(loginInfo),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
         if (!response.ok) {
             throw new Error(`Status error: ${response.status}`);
         }
@@ -36,7 +39,8 @@ loginForm.addEventListener("submit", async (e) => {
         sessionStorage.setItem("username", data.username);
         sessionStorage.setItem("admin", data.admin);
         errorMessage.textContent = data.msg;
-        location.href = "http://127.0.0.1:3000/pages/schedule.html";
+        location.href =
+            "https://restaurant-admin-production.up.railway.app/pages/schedule.html";
     } catch (err) {
         console.error(err);
         errorMessage.textContent = `Login failed, ${err}`;

@@ -21,6 +21,7 @@ const getEvent = wrapper(async (req, res) => {
 });
 
 const getAllEvents = wrapper(async (req, res) => {
+    res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
     res.header(
         "Strict-Transport-Security",
         "max-age=31536000; includeSubDomains"

@@ -34,7 +34,7 @@ registrationForm.addEventListener("submit", async (e) => {
                 "Special characters are not allowed in credentials"
             );
         }
-        const response = await fetch("http://127.0.0.1:3000/api/v1/register", {
+        const response = await fetch("/api/v1/register", {
             method: "POST",
             body: JSON.stringify(newAccountInfo),
             headers: {
@@ -54,7 +54,7 @@ registrationForm.addEventListener("submit", async (e) => {
 async function getAllUsers() {
     try {
         usersSection.replaceChildren();
-        const response = await fetch("http://127.0.0.1:3000/api/v1/register");
+        const response = await fetch("/api/v1/register");
         if (!response.ok) {
             throw new Error(`Status error: ${response.status}`);
         }
@@ -105,16 +105,13 @@ async function updateUserRole(e) {
         const nameInfo = userInfoForm.get("name");
         const roleInfo = userInfoForm.get("role");
         const id = updateInfoForm.dataset.id;
-        const response = await fetch(
-            `http://127.0.0.1:3000/api/v1/register/${id}`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ name: nameInfo, role: roleInfo }),
-            }
-        );
+        const response = await fetch(`/api/v1/register/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: nameInfo, role: roleInfo }),
+        });
         if (!response.ok) {
             throw new Error(`Status error: ${response.status}`);
         }
@@ -128,12 +125,9 @@ async function updateUserRole(e) {
 
 async function deleteUser(id) {
     try {
-        const response = await fetch(
-            `http://127.0.0.1:3000/api/v1/register/${id}`,
-            {
-                method: "DELETE",
-            }
-        );
+        const response = await fetch(`/api/v1/register/${id}`, {
+            method: "DELETE",
+        });
         if (!response.ok) {
             throw new Error(`Status error: ${response.status}`);
         }

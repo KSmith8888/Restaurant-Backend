@@ -1,3 +1,6 @@
+import { logoutUser } from "./logout-user.js";
+
+const logoutBtn = document.getElementById("logout-button");
 const addEventForm = document.getElementById("add-event-form");
 const titleInput = document.getElementById("title-input");
 const contentInput = document.getElementById("content-input");
@@ -166,6 +169,7 @@ async function deleteEvent(id) {
     }
 }
 
+logoutBtn.addEventListener("click", logoutUser);
 usernameText.textContent = `User: ${sessionStorage.getItem("username")}`;
 
 updateEventCloseBtn.addEventListener("click", () => {

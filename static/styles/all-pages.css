@@ -30,7 +30,12 @@ dialog[open] {
 }
 
 .header-info-container {
+    min-width: min-content;
     width: 15%;
+}
+
+.header-info-container:last-of-type {
+    border: 1px solid yellow;
 }
 
 .navbar {
@@ -70,6 +75,10 @@ dialog[open] {
     background-color: rgb(228, 220, 220);
     padding: 0.2em 0.5em;
     border-radius: 3px;
+}
+
+#logout-button {
+    padding: 0.4em 0.7em;
 }
 
 .form-button:hover,

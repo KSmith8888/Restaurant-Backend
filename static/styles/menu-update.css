@@ -22,7 +22,7 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 #submit-menu-modal-button,
@@ -132,6 +132,7 @@ input::file-selector-button:focus,
 @media (max-width: 950px) {
     .main {
         flex-direction: column;
+        align-items: center;
     }
     #current-menu-section {
         width: 65%;

@@ -7,7 +7,7 @@ const menuItemSchema = new Schema({
         type: String,
         required: true,
         minlength: 4,
-        maxlength: 30,
+        maxlength: 60,
         trim: true,
     },
     description: {
@@ -27,7 +27,7 @@ const menuItemSchema = new Schema({
         type: String,
         required: true,
         minlength: 4,
-        maxlength: 30,
+        maxlength: 60,
         trim: true,
     },
     highlight: {
